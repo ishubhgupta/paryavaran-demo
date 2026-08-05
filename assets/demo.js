@@ -34,7 +34,6 @@
       toast(el.dataset.demo);
       return;
     }
-    // a submit button inside a form is handled by the submit listener above
     var isSubmit = el.tagName === "BUTTON" &&
                    (el.type === "submit" || !el.type) && el.closest("form");
     if (isSubmit) return;
@@ -43,5 +42,4 @@
       toast("Demo only \u2014 nothing is saved.");
     }
   }, true);
-
 })();

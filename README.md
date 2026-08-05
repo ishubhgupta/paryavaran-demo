@@ -1,7 +1,10 @@
 # Paryavaran AI - static demo
 
-One real proposal (`FP/MP/ROAD/561551/2025`), frozen to plain HTML/CSS/JS. No server, no
-database, no build step. Every button and form is inert.
+Real proposals, frozen to plain HTML/CSS/JS. No server, no database, no
+build step. Every button and form is inert.
+
+- `FP/MP/ROAD/561551/2025`
+- `FP/MP/ROAD/558621/2025`
 
 Open `index.html`, or publish this folder with GitHub Pages
 (Settings -> Pages -> Deploy from a branch, choose this folder).
