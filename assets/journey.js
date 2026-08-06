@@ -102,9 +102,22 @@
   var TURN = 4, AHL = 7, AHW = 4.6, GAP = TURN + 3 + AHL;
   var BAR = 46, ORIGIN_BAR = 42, APPROVED_BAR = 74;
 
+  /* The terminal tab states the outcome AND what it cost, because that total is
+     the one number anyone carries out of this chart into a meeting — and adding
+     up seventeen bars by eye to find it is not a thing people do. It is measured
+     from the first day the file is ours, not from filing, so our own preparation
+     time is inside the figure rather than quietly outside it. */
+  var approvedLabel = null;
+  if (approved) {
+    approvedLabel = "Stage-I approved in " +
+                    days(legs[0].from, legs[legs.length - 1].from) + " days";
+  }
+
   var xs = [], acc = 3;
   legs.forEach(function (g) {
-    g.bw = g.noDuration ? ORIGIN_BAR : g.isApproval ? APPROVED_BAR : BAR;
+    g.bw = g.noDuration ? ORIGIN_BAR
+         : g.isApproval ? Math.max(APPROVED_BAR, approvedLabel.length * 5.55 + 22)
+         : BAR;
     xs.push(acc);
     acc += g.bw + GAP;
   });
@@ -193,7 +206,7 @@
                '" text-anchor="middle" font-size="' + (g.isApproval ? "10" : "10.5") +
                '" font-weight="650" letter-spacing=".1" fill="#fff" ' +
                'pointer-events="none">' +
-               (g.isApproval ? "Approved" : g.days + "d") + "</text>");
+               (g.isApproval ? esc(approvedLabel) : g.days + "d") + "</text>");
     }
     svg.push("</g>");
   });
@@ -209,42 +222,78 @@
              MUTE + '" pointer-events="none">' + dm(g.from) + "</text>");
   });
 
-  var legOfEds = {};
+  /* Two pins per round, not one.
+
+     A round is two separate things happening on two different days at two
+     different desks: a query goes down, and later an answer comes back. One pin
+     carrying both had to describe an answer that, at the moment it is drawn,
+     may not exist — and on an open round it said nothing about what is being
+     waited for. So the amber pin marks the objection and shows only that; the
+     blue one marks the reply and shows the query with its answer beside it.
+
+     Absence is then the signal: an amber pin with no blue one after it is a
+     question nobody has answered yet. */
+  var AMBER = "#d99a10", BLUE = "#2f7fb5";
+  var legOfEds = {}, legOfReply = {};
   legs.forEach(function (g, i) {
     g.events.forEach(function (p) {
-      if (p.kind === "eds_raised" && p.eds_id != null && legOfEds[p.eds_id] == null) {
-        legOfEds[p.eds_id] = i;
-      }
+      if (p.eds_id == null) return;
+      if (p.kind === "eds_raised" && legOfEds[p.eds_id] == null) legOfEds[p.eds_id] = i;
+      if (p.kind === "eds_answered" && legOfReply[p.eds_id] == null) legOfReply[p.eds_id] = i;
     });
   });
 
+  // Several pins can land on one tab; spread them so none hides another.
+  var pinsOn = {};
+  function place(li, id, kind, m) {
+    var g = legs[li];
+    if (!g) return null;
+    var n = (pinsOn[li] = (pinsOn[li] || 0) + 1);
+    return { g: g, cx: g.x0 + g.bw / 2 + (n - 1) * 12, cy: g.cy - EYE, id: id,
+             kind: kind, m: m };
+  }
+
+  var pins = [];
   eds.forEach(function (m) {
     var dip = legOfEds[m.id];
     if (dip === undefined) {
       for (var k = 0; k < legs.length; k++) { if (legs[k].from <= m.date) dip = k; }
     }
-    if (dip === null || dip === undefined) return;
-    var hg = legs[dip > 0 ? dip - 1 : dip] || legs[dip];
-    // sits on the tab's top edge, the way a pin sits on a bar
-    var cx = hg.x0 + hg.bw / 2, cy = hg.cy - EYE, r = 4.5;
-    // amber either way; filled means answered, hollow means still open
-    var col = "#d99a10";
-    var dia = function (k) {
-      return "M" + cx + " " + (cy - k) + "L" + (cx + k) + " " + cy + "L" +
-             cx + " " + (cy + k) + "L" + (cx - k) + " " + cy + "Z";
-    };
+    if (dip !== null && dip !== undefined) {
+      // the raise is pinned to the desk that RAISED it, the tab before the dip
+      var p = place(dip > 0 ? dip - 1 : dip, m.id, "raised", m);
+      if (p) pins.push(p);
+    }
+    /* The reply is pinned to the desk that WROTE it, not to the one the file
+       returned to. The eds_answered leg is the raiser getting its file back;
+       the answer was composed on the leg before that, while the recipient still
+       held it. Pinning the return also stacked the blue pin on the same bar as
+       the NEXT round's amber one, so a stage that raised a fresh objection and
+       a stage that received an old answer looked identical. */
+    if (m.status === "answered" && legOfReply[m.id] !== undefined) {
+      var back = legOfReply[m.id];
+      var q = place(back > 0 ? back - 1 : back, m.id, "answered", m);
+      if (q) pins.push(q);
+    }
+  });
 
-    svg.push('<g class="edsmark" data-id="' + m.id + '">');
-    svg.push('<circle cx="' + cx + '" cy="' + cy + '" r="9" fill="transparent"/>');
-    // a white halo, or a green "answered" pin vanishes into a green tab
+  pins.forEach(function (p) {
+    var r = 4.5, col = p.kind === "answered" ? BLUE : AMBER;
+    var dia = function (k) {
+      return "M" + p.cx + " " + (p.cy - k) + "L" + (p.cx + k) + " " + p.cy + "L" +
+             p.cx + " " + (p.cy + k) + "L" + (p.cx - k) + " " + p.cy + "Z";
+    };
+    svg.push('<g class="edsmark" data-id="' + p.id + '" data-kind="' + p.kind + '">');
+    svg.push('<circle cx="' + p.cx + '" cy="' + p.cy + '" r="9" fill="transparent"/>');
+    // a white halo, or a pin vanishes into a tab of a similar colour
     svg.push('<path d="' + dia(r + 2) + '" fill="#fff"/>');
     svg.push('<path d="' + dia(r) + '" fill="' +
-             (m.status === "answered" ? col : "#fffdf7") + '" stroke="' + col +
+             (p.kind === "answered" ? col : "#fffdf7") + '" stroke="' + col +
              '" stroke-width="2" stroke-linejoin="round"/>');
-    if (m.count > 1) {
-      svg.push('<text x="' + (cx + 8.5) + '" y="' + (cy + 3.5) +
+    if (p.m.count > 1) {
+      svg.push('<text x="' + (p.cx + 8.5) + '" y="' + (p.cy + 3.5) +
                '" font-size="9.5" font-weight="700" fill="' + col +
-               '" pointer-events="none">&#215;' + m.count + "</text>");
+               '" pointer-events="none">&#215;' + p.m.count + "</text>");
     }
     svg.push("</g>");
   });
@@ -313,8 +362,10 @@
              "being prepared before this is not recorded.</div>";
     }
     if (g.isApproval) {
-      h += "Approved " + dmy(g.from) +
-           '<div class="hopline">The clock stops here.</div>';
+      h += "Stage-I approved " + dmy(g.from) +
+           '<div class="hopline">' + plural(days(legs[0].from, g.from), "day") +
+           " from the day the file became ours (" + dmy(legs[0].from) + ")." +
+           "</div><div class=\"hopline\">The clock stops here.</div>";
     } else {
       h += dmy(g.from) + " &rarr; " + (g.open ? "now" : dmy(g.end)) +
            " &middot; <b>" + plural(g.days, "day") + "</b>";
@@ -327,27 +378,50 @@
       seen[what] = 1;
       h += '<div class="hopline">&bull; ' + esc(what) + "</div>";
     });
+    // Anything bolted on by the page — remarks, in the demo. Kept as a hook so
+    // the chart itself stays about the journey and nothing else.
+    var hooks = window.PA_JOURNEY_HOOKS || {};
+    if (hooks.legExtra) h += hooks.legExtra(g);
     return h;
   }
 
-  function edsTip(m) {
-    var h = "<b>" + esc(m.raised_by) + "</b> raised this";
+  /* The amber pin: what was ASKED, and nothing else. On the day it is drawn the
+     answer does not exist yet, and on an open round it still does not — so
+     showing a reply slot here would either be blank or would report a fact from
+     the future. */
+  function raisedTip(m) {
+    var h = "<b>" + esc(m.raised_by) + "</b> raised " +
+            (m.count === 1 ? "an objection" : m.count + " objections");
     h += '<div class="sub">' + dmy(m.date) + " &middot; " +
-         (m.status === "answered"
-            ? "answered" + (m.turnaround !== null ? " in " + plural(m.turnaround, "day") : "")
-            : "still open") + "</div>";
+         (m.status === "answered" ? "answered later" : "still unanswered") + "</div>";
     (m.chain || []).forEach(function (c) {
-      h += '<div class="hopline">&darr; ' + esc(c.rung) + " &middot; " + dmy(c.on) + "</div>";
+      h += '<div class="hopline">&darr; sent to ' + esc(c.rung) + " &middot; " +
+           dmy(c.on) + "</div>";
     });
-    if (m.status === "answered") {
-      h += '<div class="hopline">&uarr; back to ' + esc(m.raised_by) + "</div>";
-    }
     h += '<div class="sepline"></div>';
     (m.objections || []).forEach(function (o, i) {
-      h += "<div>" + (i + 1) + ". " + esc(o.q) + "</div>";
-      h += '<div class="hopline">' + (o.reply
-           ? "&#8627; " + esc(o.reply) + (o.on ? " &middot; " + dmy(o.on) : "")
-           : "&#8627; awaiting reply") + "</div>";
+      h += "<div>" + (m.count > 1 ? (i + 1) + ". " : "") + esc(o.q) + "</div>";
+    });
+    return h + '<div class="sub" style="margin-top:6px">' +
+           (m.status === "answered"
+              ? "The blue pin further along carries the reply."
+              : "No reply recorded yet.") + "</div>";
+  }
+
+  /* The blue pin: the answer, shown BESIDE the question it answers. A reply on
+     its own is unreadable — nobody remembers which of five queries it settles. */
+  function answeredTip(m) {
+    var h = "<b>Answered</b> &middot; back to " + esc(m.raised_by);
+    h += '<div class="sub">' + (m.answered_on ? dmy(m.answered_on) + " &middot; " : "") +
+         (m.turnaround !== null && m.turnaround !== undefined
+            ? "took " + plural(m.turnaround, "day") : "") + "</div>";
+    h += '<div class="sepline"></div>';
+    (m.objections || []).forEach(function (o, i) {
+      h += '<div class="qa"><div class="q">' + (m.count > 1 ? (i + 1) + ". " : "") +
+           esc(o.q) + "</div>";
+      h += '<div class="a">' + (o.reply
+           ? esc(o.reply) + (o.on ? '<span class="on"> &middot; ' + dmy(o.on) + "</span>" : "")
+           : "no reply recorded") + "</div></div>";
     });
     return h + '<div class="sub" style="margin-top:6px">Click to jump to it below</div>';
   }
@@ -357,12 +431,20 @@
     if (!g) return;
     el.addEventListener("mouseenter", function () { show(legTip(g), el); });
     el.addEventListener("mouseleave", hide);
+    el.addEventListener("click", function (e) {
+      var hooks = window.PA_JOURNEY_HOOKS || {};
+      if (!hooks.onLegClick) return;
+      e.stopPropagation();
+      hide();
+      hooks.onLegClick(g, el, stages[g.s] ? stages[g.s].label : "");
+    });
   });
 
   Array.prototype.forEach.call(host.querySelectorAll(".edsmark"), function (el) {
     var m = eds.filter(function (e) { return String(e.id) === el.dataset.id; })[0];
     if (!m) return;
-    el.addEventListener("mouseenter", function () { show(edsTip(m), el); });
+    var tipFor = el.dataset.kind === "answered" ? answeredTip : raisedTip;
+    el.addEventListener("mouseenter", function () { show(tipFor(m), el); });
     el.addEventListener("mouseleave", hide);
     el.addEventListener("click", function () {
       var t = document.getElementById("eds-" + m.id);

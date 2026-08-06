@@ -296,3 +296,50 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
   font-size:12.5px;box-shadow:0 8px 26px rgba(0,0,0,.28);opacity:0;
   pointer-events:none;transition:opacity .18s,transform .18s}
 .demo-toast.on{opacity:1;transform:translate(-50%,0)}
+
+/* ── objection tooltip: the answer sits beside the question it answers ──── */
+.jtip .qa{margin:0 0 8px}
+.jtip .qa:last-child{margin-bottom:0}
+.jtip .qa .q{color:#eef3ef;line-height:1.45}
+.jtip .qa .a{margin-top:3px;padding-left:9px;border-left:2px solid #4f9fd4;
+  color:#bcd6e8;line-height:1.45}
+.jtip .qa .a .on{color:#8fa9bb}
+
+/* ── stage remarks ─────────────────────────────────────────────────────── */
+.jtip .rk-line{color:#cfe0d6;line-height:1.45;margin-bottom:5px}
+.jtip .rk-by{display:block;color:#8ea79a;font-size:10px;margin-top:1px}
+.jtip .rk-more,.jtip .rk-none{color:#94a89c;font-size:10.5px}
+.jtip .rk-none b{color:#dbe7e0}
+
+.rk-panel{position:fixed;z-index:70;width:340px;max-height:70vh;display:flex;
+  flex-direction:column;background:var(--surface);border:1px solid var(--line-2);
+  border-radius:11px;box-shadow:0 14px 40px rgba(27,36,31,.22);overflow:hidden;
+  font-size:12.5px}
+.rk-head{display:flex;align-items:flex-start;gap:10px;padding:12px 14px 10px;
+  border-bottom:1px solid var(--line);background:var(--surface-2)}
+.rk-head b{font-size:13px}
+.rk-sub{color:var(--ink-3);font-size:11px;margin-top:2px}
+.rk-x{margin-left:auto;border:none;background:none;font-size:19px;line-height:1;
+  color:var(--ink-3);cursor:pointer;padding:0 2px}
+.rk-x:hover{color:var(--ink)}
+.rk-list{overflow-y:auto;padding:6px 14px;flex:1;min-height:0}
+.rk-empty{color:var(--ink-3);padding:12px 0;line-height:1.5}
+.rk-item{padding:9px 0;border-bottom:1px solid var(--line)}
+.rk-item:last-child{border-bottom:none}
+.rk-text{line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.rk-meta{display:flex;align-items:center;gap:8px;color:var(--ink-3);font-size:10.5px;
+  margin-top:4px}
+.rk-del{margin-left:auto;border:none;background:none;color:var(--ink-3);
+  font-size:10.5px;cursor:pointer;padding:0;text-decoration:underline}
+.rk-del:hover{color:#b8384f}
+.rk-add{border-top:1px solid var(--line);padding:10px 14px 12px;background:var(--surface-2)}
+.rk-add textarea{width:100%;box-sizing:border-box;resize:vertical;font:inherit;
+  padding:8px 10px;border:1px solid var(--line-2);border-radius:7px;
+  background:var(--surface);color:var(--ink);line-height:1.45}
+.rk-add textarea:focus{outline:none;border-color:#5aa87f;
+  box-shadow:0 0 0 3px rgba(90,168,127,.16)}
+.rk-actions{display:flex;align-items:center;gap:10px;margin-top:8px}
+.rk-hint{color:var(--ink-3);font-size:10.5px}
+.rk-save{margin-left:auto;border:none;border-radius:7px;padding:7px 14px;
+  background:#2f7d55;color:#fff;font-weight:600;font-size:12px;cursor:pointer}
+.rk-save:hover{background:#276947}
