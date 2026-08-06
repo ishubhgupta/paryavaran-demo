@@ -102,22 +102,14 @@
   var TURN = 4, AHL = 7, AHW = 4.6, GAP = TURN + 3 + AHL;
   var BAR = 46, ORIGIN_BAR = 42, APPROVED_BAR = 74;
 
-  /* The terminal tab states the outcome AND what it cost, because that total is
-     the one number anyone carries out of this chart into a meeting — and adding
-     up seventeen bars by eye to find it is not a thing people do. It is measured
-     from the first day the file is ours, not from filing, so our own preparation
-     time is inside the figure rather than quietly outside it. */
-  var approvedLabel = null;
-  if (approved) {
-    approvedLabel = "Stage-I approved in " +
-                    days(legs[0].from, legs[legs.length - 1].from) + " days";
-  }
-
+  /* The tab says "Approved" and nothing more. The total the file took is the
+     headline fact, but it belongs in the header beside the filing date, where a
+     reader looks for it — spelling it out on the bar as well made the terminal
+     tab three times the width of every other one for a number already stated
+     above the chart. */
   var xs = [], acc = 3;
   legs.forEach(function (g) {
-    g.bw = g.noDuration ? ORIGIN_BAR
-         : g.isApproval ? Math.max(APPROVED_BAR, approvedLabel.length * 5.55 + 22)
-         : BAR;
+    g.bw = g.noDuration ? ORIGIN_BAR : g.isApproval ? APPROVED_BAR : BAR;
     xs.push(acc);
     acc += g.bw + GAP;
   });
@@ -206,7 +198,7 @@
                '" text-anchor="middle" font-size="' + (g.isApproval ? "10" : "10.5") +
                '" font-weight="650" letter-spacing=".1" fill="#fff" ' +
                'pointer-events="none">' +
-               (g.isApproval ? esc(approvedLabel) : g.days + "d") + "</text>");
+               (g.isApproval ? "Approved" : g.days + "d") + "</text>");
     }
     svg.push("</g>");
   });
