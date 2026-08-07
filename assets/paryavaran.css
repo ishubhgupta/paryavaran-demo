@@ -257,6 +257,14 @@ textarea.pa-input{resize:vertical}
 .jtip b{color:#fff}
 .jtip .sub{color:#94a89c;font-size:10.5px;margin-top:2px}
 .jtip .sepline{height:1px;background:rgba(255,255,255,.14);margin:7px 0}
+/* an objection's answer sits beside the question it answers: a reply on its own
+   is unreadable, because nobody remembers which of five queries it settles */
+.jtip .qa{margin:0 0 8px}
+.jtip .qa:last-child{margin-bottom:0}
+.jtip .qa .q{color:#eef3ef;line-height:1.45}
+.jtip .qa .a{margin-top:3px;padding-left:9px;border-left:2px solid #4f9fd4;
+  color:#bcd6e8;line-height:1.45}
+.jtip .qa .a .on{color:#8fa9bb}
 .jtip .hopline{color:#b9c9c0;padding-left:2px}
 .jtip .why{margin-top:7px;padding:6px 8px;border-radius:5px;background:rgba(184,56,79,.16);
   border-left:2.5px solid #c76073;color:#f0dbdf;line-height:1.45}
@@ -272,45 +280,13 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
   outline:2px solid var(--brand);outline-offset:2px}
 
 /* ── static demo only ──────────────────────────────────────────────────── */
-.plist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
-  overflow:hidden}
-.plist table{width:100%;border-collapse:collapse;font-size:12.5px}
-.plist th{text-align:left;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
-  color:var(--ink-3);font-weight:700;padding:11px 14px;background:var(--surface-2);
-  border-bottom:1px solid var(--line);white-space:nowrap}
-.plist td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
-.plist tr:last-child td{border-bottom:none}
-.plist tbody tr{cursor:pointer;transition:background .12s}
-.plist tbody tr:hover{background:var(--surface-2)}
-.plist .nm{font-weight:600;color:var(--ink);line-height:1.4;display:block;
-  max-width:520px}
-.plist .no{font-size:11px;color:var(--ink-3);margin-top:3px;display:block}
-.plist .stg{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
-.plist .stg .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
-.plist .num{font-variant-numeric:tabular-nums;white-space:nowrap}
-.plist .muted{color:var(--ink-3)}
-@media (max-width:900px){.plist .hide-sm{display:none}}
-
-.demo-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,10px);
-  z-index:99;background:#17201b;color:#eef3ef;padding:10px 16px;border-radius:8px;
-  font-size:12.5px;box-shadow:0 8px 26px rgba(0,0,0,.28);opacity:0;
-  pointer-events:none;transition:opacity .18s,transform .18s}
-.demo-toast.on{opacity:1;transform:translate(-50%,0)}
-
-/* ── objection tooltip: the answer sits beside the question it answers ──── */
-.jtip .qa{margin:0 0 8px}
-.jtip .qa:last-child{margin-bottom:0}
-.jtip .qa .q{color:#eef3ef;line-height:1.45}
-.jtip .qa .a{margin-top:3px;padding-left:9px;border-left:2px solid #4f9fd4;
-  color:#bcd6e8;line-height:1.45}
-.jtip .qa .a .on{color:#8fa9bb}
-
-/* ── stage remarks ─────────────────────────────────────────────────────── */
+/* stage remarks. The chart says where a file is and how long it has been
+   there; it cannot say why. These notes are demo-side only — in the real tool
+   this is a table with an author and a per-request write check. */
 .jtip .rk-line{color:#cfe0d6;line-height:1.45;margin-bottom:5px}
 .jtip .rk-by{display:block;color:#8ea79a;font-size:10px;margin-top:1px}
 .jtip .rk-more,.jtip .rk-none{color:#94a89c;font-size:10.5px}
 .jtip .rk-none b{color:#dbe7e0}
-
 .rk-panel{position:fixed;z-index:70;width:340px;max-height:70vh;display:flex;
   flex-direction:column;background:var(--surface);border:1px solid var(--line-2);
   border-radius:11px;box-shadow:0 14px 40px rgba(27,36,31,.22);overflow:hidden;
@@ -343,3 +319,40 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .rk-save{margin-left:auto;border:none;border-radius:7px;padding:7px 14px;
   background:#2f7d55;color:#fff;font-weight:600;font-size:12px;cursor:pointer}
 .rk-save:hover{background:#276947}
+
+.ctabs{display:flex;gap:4px;margin:0 0 12px;padding:3px;border-radius:10px;
+  background:var(--surface-3);border:1px solid var(--line);width:max-content}
+.ctab{border:none;background:none;border-radius:7px;padding:7px 15px;cursor:pointer;
+  font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-3);
+  display:inline-flex;align-items:center;gap:7px;transition:background .12s,color .12s}
+.ctab:hover{color:var(--ink)}
+.ctab.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-sm)}
+.ctab .n{font-weight:600;font-size:10.5px;color:var(--ink-4);
+  font-variant-numeric:tabular-nums}
+.ctab.on .n{color:var(--ink-3)}
+.pempty{padding:22px 14px;color:var(--ink-3);font-size:12.5px}
+
+.plist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  overflow:hidden}
+.plist table{width:100%;border-collapse:collapse;font-size:12.5px}
+.plist th{text-align:left;font-size:9.5px;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--ink-3);font-weight:700;padding:11px 14px;background:var(--surface-2);
+  border-bottom:1px solid var(--line);white-space:nowrap}
+.plist td{padding:13px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+.plist tr:last-child td{border-bottom:none}
+.plist tbody tr{cursor:pointer;transition:background .12s}
+.plist tbody tr:hover{background:var(--surface-2)}
+.plist .nm{font-weight:600;color:var(--ink);line-height:1.4;display:block;
+  max-width:520px}
+.plist .no{font-size:11px;color:var(--ink-3);margin-top:3px;display:block}
+.plist .stg{display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.plist .stg .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+.plist .num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.plist .muted{color:var(--ink-3)}
+@media (max-width:900px){.plist .hide-sm{display:none}}
+
+.demo-toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,10px);
+  z-index:99;background:#17201b;color:#eef3ef;padding:10px 16px;border-radius:8px;
+  font-size:12.5px;box-shadow:0 8px 26px rgba(0,0,0,.28);opacity:0;
+  pointer-events:none;transition:opacity .18s,transform .18s}
+.demo-toast.on{opacity:1;transform:translate(-50%,0)}

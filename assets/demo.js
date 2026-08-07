@@ -26,9 +26,36 @@
     toast("Demo only \u2014 nothing is saved.");
   }, true);
 
+  /* The clearance filter. Each type runs a different ladder, so the board shows
+     one at a time rather than mixing chains in a single list. */
+  var tabs = [].slice.call(document.querySelectorAll(".ctab"));
+  if (tabs.length) {
+    var rows = [].slice.call(document.querySelectorAll(".plist tbody tr"));
+    var empty = document.querySelector(".pempty");
+    var pick = function (type) {
+      var shown = 0;
+      rows.forEach(function (r) {
+        var on = r.dataset.type === type;
+        r.hidden = !on;
+        if (on) shown++;
+      });
+      tabs.forEach(function (t) { t.classList.toggle("on", t.dataset.type === type); });
+      if (empty) empty.hidden = shown > 0;
+    };
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        pick(t.dataset.type);
+      }, true);
+    });
+    pick(tabs[0].dataset.type);
+  }
+
   document.addEventListener("click", function (e) {
     var el = e.target.closest("[data-demo], button, .btn, summary > *");
     if (!el) return;
+    if (el.classList && el.classList.contains("ctab")) return;   // handled above
     if (el.dataset && el.dataset.demo) {
       e.preventDefault();
       toast(el.dataset.demo);
