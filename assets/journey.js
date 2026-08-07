@@ -256,15 +256,14 @@
       var p = place(dip > 0 ? dip - 1 : dip, m.id, "raised", m);
       if (p) pins.push(p);
     }
-    /* The reply is pinned to the desk that WROTE it, not to the one the file
-       returned to. The eds_answered leg is the raiser getting its file back;
-       the answer was composed on the leg before that, while the recipient still
-       held it. Pinning the return also stacked the blue pin on the same bar as
-       the NEXT round's amber one, so a stage that raised a fresh objection and
-       a stage that received an old answer looked identical. */
-    if (m.status === "answered" && legOfReply[m.id] !== undefined) {
-      var back = legOfReply[m.id];
-      var q = place(back > 0 ? back - 1 : back, m.id, "answered", m);
+    /* The reply is pinned to the desk that WROTE it: the leg the objection
+       LANDED on, where the recipient sat holding the file until it answered.
+       Not the eds_answered leg — that is the raiser getting its file back — and
+       not "the leg before" it either, because a movement can fall between the
+       two on the same day, which put the pin on a desk that never saw the
+       query. Anchoring on the landing leg needs nothing to be adjacent. */
+    if (m.status === "answered" && dip !== null && dip !== undefined) {
+      var q = place(dip, m.id, "answered", m);
       if (q) pins.push(q);
     }
   });
