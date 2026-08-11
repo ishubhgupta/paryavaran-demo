@@ -70,8 +70,8 @@
             <span class="sep"></span>approved
               <b>13/01/2026</b>
           
-          <span class="sep"></span>sent back <b>2</b><span class="sep"></span>
-          <b>1</b> EDS
+          <span class="sep"></span>sent back <b>0</b><span class="sep"></span>
+          <b>0</b> EDS
         </div>
       
     </div>
@@ -122,57 +122,7 @@
   
 
   
-  <div class="edsrow" id="eds-4026" x-data="{forward:false, edit:false}">
-    <div class="edshead">
-      <div style="min-width:0">
-        <div class="edspath">EAC Appraisal raised this</div>
-        <div class="edsmeta">
-          01/12/2025
-          <span class="sep"></span>1 of 1 answered
-          
-            <span class="sep"></span>closed in 21d
-          
-        </div>
-      </div>
-      <span class="pill answered">Answered</span>
-    </div>
-
-    
-    <div class="chain">
-      <span class="hop" style="background:var(--surface-3)">EAC Appraisal</span>
-      
-        <span class="arr">&rarr;</span>
-        <span class="hop ">
-          User Agency (UA) <span style="opacity:.6">01/12/2025</span>
-        </span>
-      
-      
-        <span class="arr">&rarr;</span>
-        <span class="hop" style="background:var(--good-soft);color:#1f6b3f;font-weight:600">
-          back to EAC Appraisal <span style="opacity:.7">22/12/2025</span></span>
-      
-    </div>
-
-    
-    <div class="objitem" x-data="{answer:false}">
-      <div class="objnum done">1</div>
-      <div style="flex:1;min-width:0">
-        <div class="q">Essential Details Sought by the appraisal desk. PARIVESH records the round but not its text.</div>
-        
-        
-        <div class="replybox">
-          <div class="rl">Our reply &middot; 22/12/2025</div>
-          <div class="rt">Reply submitted to the appraisal desk.</div>
-        </div>
-        
-        
-      </div>
-      
-    </div>
-    
-
-    
-  </div>
+  <div class="empty">No objections recorded yet.</div>
   
 </div>
       
@@ -198,13 +148,13 @@
       
       <div class="panel" x-data="{open:false}">
         <button type="button" class="btn-sm" style="width:100%" @click="open=!open">
-          Movements (13)</button>
+          Movements (3)</button>
         <div class="ph" style="margin-top:6px">Correct a date or desk entered by mistake.</div>
         <div x-show="open" x-cloak style="margin-top:10px">
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">EAC (Terms of Reference)</div>
+              <div class="mvlab">MoEFCC</div>
               <div class="mvmeta">02/11/2025
                 <span class="sep"></span>submitted
                 </div>
@@ -221,10 +171,10 @@
                   <select class="pa-select" name="rung">
                     <option value="submitted"
                       >User Agency (UA)</option><option value="eac_tor"
-                      selected>EAC (Terms of Reference)</option><option value="spcb"
+                      >EAC (Terms of Reference)</option><option value="spcb"
                       >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
                       >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
+                      selected>MoEFCC</option><option value="eac_appraisal"
                       >EAC Appraisal</option><option value="competent_authority"
                       >Competent Authority</option><option value="ec_granted"
                       >EC granted</option>
@@ -269,7 +219,7 @@
                       >EAC (Terms of Reference)</option><option value="spcb"
                       >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
                       >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
+                      >MoEFCC</option><option value="eac_appraisal"
                       selected>EAC Appraisal</option><option value="competent_authority"
                       >Competent Authority</option><option value="ec_granted"
                       >EC granted</option>
@@ -278,388 +228,6 @@
                 <label class="flab" style="max-width:150px">On
                   <input class="pa-input" type="date" name="on"
                          value="2025-12-01" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">User Agency (UA)</div>
-              <div class="mvmeta">01/12/2025
-                <span class="sep"></span>eds raised
-                <span class="sep"></span>from an objection</div>
-            </div>
-            
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">22/12/2025
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2025-12-22" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">EAC Appraisal</div>
-              <div class="mvmeta">22/12/2025
-                <span class="sep"></span>eds answered
-                <span class="sep"></span>from an objection</div>
-            </div>
-            
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">01/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-01" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">06/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-06" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">11/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-11" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">11/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-11" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">12/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-12" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">13/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-13" max="2026-08-11">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">Competent Authority</div>
-              <div class="mvmeta">13/01/2026
-                <span class="sep"></span>moved
-                </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
-                      selected>Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-01-13" max="2026-08-11">
                 </label>
               </div>
               <div class="frow">
@@ -696,7 +264,7 @@
                       >EAC (Terms of Reference)</option><option value="spcb"
                       >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
                       >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (Minutes)</option><option value="eac_appraisal"
+                      >MoEFCC</option><option value="eac_appraisal"
                       >EAC Appraisal</option><option value="competent_authority"
                       >Competent Authority</option><option value="ec_granted"
                       selected>EC granted</option>
@@ -731,7 +299,7 @@
           <b style="color:#52a32f">EC granted</b></div>
         <div class="rrow"><span>Open objections</span><b>0</b></div>
         <div class="rrow"><span>Days open</span><b>72</b></div>
-        <div class="rrow"><span>Times sent back</span><b>2</b></div>
+        <div class="rrow"><span>Times sent back</span><b>0</b></div>
         <div class="rrow"><span>Pending with</span><b>—</b></div>
         
       </div>
@@ -742,7 +310,7 @@
 </div>
 
 
-<script>window.PA_JOURNEY = {"eds": [{"answered": 1, "chain": [{"on": "2025-12-01", "rung": "User Agency (UA)"}], "count": 1, "date": "2025-12-01", "id": 4026, "objections": [{"on": "2025-12-22", "q": "Essential Details Sought by the appraisal desk. PARIVESH records the round but not its text.", "reply": "Reply submitted to the appraisal desk."}], "raised_by": "EAC Appraisal", "s": 5, "status": "answered", "to_s": 0, "turnaround": 21}], "line": [{"back": false, "court": "NHAI", "date": "2025-11-02", "eds_id": null, "kind": "origin", "label": "User Agency (UA)", "no_duration": true, "note": "", "outcome": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2025-11-02", "eds_id": null, "kind": "submitted", "label": "EAC (Terms of Reference)", "note": "", "outcome": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2025-12-01", "eds_id": null, "kind": "moved", "label": "EAC Appraisal", "note": "EC_PART_C_MS_VERIFICATION", "outcome": null, "s": 5}, {"back": true, "court": "NHAI", "date": "2025-12-01", "eds_id": 4026, "kind": "eds_raised", "label": "User Agency (UA)", "note": "", "outcome": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2025-12-22", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_DD_FORWARD", "outcome": null, "s": 6}, {"back": true, "court": "AUTHORITY", "date": "2025-12-22", "eds_id": 4026, "kind": "eds_answered", "label": "EAC Appraisal", "note": "", "outcome": null, "s": 5}, {"back": false, "court": "AUTHORITY", "date": "2026-01-01", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_MS_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-06", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_AS_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-11", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_SEC_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-11", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_MEF_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-12", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_SEC_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-13", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_AS_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-13", "eds_id": null, "kind": "moved", "label": "Competent Authority", "note": "EC_PART_C_FORWARDED_TO_MS_FORWARD", "outcome": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-13", "eds_id": null, "kind": "moved", "label": "EC granted", "note": "EC granted", "outcome": null, "s": 7}], "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "eac_tor", "label": "EAC (Terms of Reference)"}, {"color": "#825f0a", "key": "spcb", "label": "State PCB (Draft EIA/EMP)"}, {"color": "#b8802a", "key": "public_hearing", "label": "Public Hearing"}, {"color": "#068694", "key": "moefcc_mom", "label": "MoEFCC (Minutes)"}, {"color": "#2173d6", "key": "eac_appraisal", "label": "EAC Appraisal"}, {"color": "#23a1b1", "key": "competent_authority", "label": "Competent Authority"}, {"color": "#52a32f", "key": "ec_granted", "label": "EC granted"}]};</script>
+<script>window.PA_JOURNEY = {"eds": [], "line": [{"back": false, "court": "NHAI", "date": "2025-11-02", "eds_id": null, "kind": "origin", "label": "User Agency (UA)", "no_duration": true, "note": "", "outcome": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2025-11-02", "eds_id": null, "kind": "submitted", "label": "MoEFCC", "note": "Under Examination", "outcome": null, "s": 4}, {"back": false, "court": "AUTHORITY", "date": "2025-12-01", "eds_id": null, "kind": "moved", "label": "EAC Appraisal", "note": "Proposal Accepted and Referred to EAC", "outcome": null, "s": 5}, {"back": false, "court": "AUTHORITY", "date": "2026-01-13", "eds_id": null, "kind": "moved", "label": "EC granted", "note": "EC Granted", "outcome": null, "s": 7}], "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "eac_tor", "label": "EAC (Terms of Reference)"}, {"color": "#825f0a", "key": "spcb", "label": "State PCB (Draft EIA/EMP)"}, {"color": "#b8802a", "key": "public_hearing", "label": "Public Hearing"}, {"color": "#068694", "key": "moefcc_mom", "label": "MoEFCC"}, {"color": "#2173d6", "key": "eac_appraisal", "label": "EAC Appraisal"}, {"color": "#23a1b1", "key": "competent_authority", "label": "Competent Authority"}, {"color": "#52a32f", "key": "ec_granted", "label": "EC granted"}]};</script>
 <script src="assets/journey.js?v=f121a2021b"></script>
 
 
