@@ -353,7 +353,9 @@
              "being prepared before this is not recorded.</div>";
     }
     if (g.isApproval) {
-      h += "Stage-I approved " + dmy(g.from) +
+      // named by the ladder, not hardcoded: Forest ends in a diversion order,
+      // Wildlife in a permit, Environment in a grant
+      h += esc(stages[g.s] ? stages[g.s].label : "Cleared") + " " + dmy(g.from) +
            '<div class="hopline">' + plural(days(legs[0].from, g.from), "day") +
            " from the day the file became ours (" + dmy(legs[0].from) + ")." +
            "</div><div class=\"hopline\">The clock stops here.</div>";
