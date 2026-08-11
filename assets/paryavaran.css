@@ -320,17 +320,21 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
   background:#2f7d55;color:#fff;font-weight:600;font-size:12px;cursor:pointer}
 .rk-save:hover{background:#276947}
 
-.ctabs{display:flex;gap:4px;margin:0 0 12px;padding:3px;border-radius:10px;
-  background:var(--surface-3);border:1px solid var(--line);width:max-content}
-.ctab{border:none;background:none;border-radius:7px;padding:7px 15px;cursor:pointer;
-  font:inherit;font-size:12.5px;font-weight:600;color:var(--ink-3);
-  display:inline-flex;align-items:center;gap:7px;transition:background .12s,color .12s}
-.ctab:hover{color:var(--ink)}
-.ctab.on{background:var(--surface);color:var(--ink);box-shadow:var(--sh-sm)}
-.ctab .n{font-weight:600;font-size:10.5px;color:var(--ink-4);
-  font-variant-numeric:tabular-nums}
-.ctab.on .n{color:var(--ink-3)}
 .pempty{padding:22px 14px;color:var(--ink-3);font-size:12.5px}
+/* the clearance band: which ladder the rows beneath it run on */
+.plist tr.grouphead td{background:var(--surface-3);border-bottom:1px solid var(--line);
+  border-top:1px solid var(--line);padding:9px 16px;font-size:12px;font-weight:700;
+  color:var(--ink);letter-spacing:-.005em}
+.plist tr:first-child.grouphead td{border-top:none}
+.plist tr.grouphead{cursor:default}
+.plist tr.grouphead:hover td{background:var(--surface-3)}
+.plist .gdot{display:inline-block;width:7px;height:7px;border-radius:2px;
+  margin-right:9px;vertical-align:1px}
+.plist .gn{display:inline-block;margin-left:8px;font-size:10.5px;font-weight:700;
+  color:var(--ink-3);background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--r-pill);padding:1px 8px}
+.plist .gsub{float:right;font-weight:400;font-size:11px;color:var(--ink-3)}
+@media (max-width:900px){.plist .gsub{display:none}}
 
 .plist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
   overflow:hidden;box-shadow:var(--sh-sm)}
