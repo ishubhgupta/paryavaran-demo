@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/paryavaran.css?v=e05e54715b">
+<link rel="stylesheet" href="assets/paryavaran.css?v=250dca820e">
 
 <script src="assets/htmx.min.js?v=449317ade7"></script>
 <script defer src="assets/alpinejs.cdn.min.js?v=d9662e2431"></script>
@@ -64,72 +64,88 @@
   <div class="plist">
     <table>
       <thead><tr>
-        <th>Proposal</th><th>Stage</th><th class="hide-sm">Pending with</th>
-        <th class="hide-sm">Area</th><th>Objections</th><th>Last activity</th>
+        <th>Proposal</th><th>Where it has got to</th>
+        <th class="hide-sm">Objections</th><th>Last activity</th>
       </tr></thead>
       <tbody>
         <tr data-type="FC" onclick="location.href='proposal-561551.html'">
           <td><span class="nm">Development of 6 lane Greenfield access-controlled Indore Eastern Bypass starting from design km 113+000 near Simroi/Datoda village and ending at design km 139+630 near Nanded village (Package – 2) of Indore district in the state of Madya Pradesh on EPC Mode under NH(O)</span><span class="no">FP/MP/ROAD/561551/2025</span></td>
-          <td><span class="stg"><span class="dot" style="background:#52a32f"></span>Approved</span></td>
-          <td class="hide-sm muted">&mdash;</td>
-          <td class="hide-sm num">9.69 ha</td>
-          <td class="num">5 rounds &middot; 5 objections</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#52a32f"></span>Approved</span>
+            <span class="track"><i style="width:100%;background:#52a32f"></i></span>
+            <span class="step">cleared</span>
+          </td>
+          <td class="hide-sm num">5</td>
           <td class="num muted">16/07/2026</td>
         </tr>
         <tr data-type="FC" onclick="location.href='proposal-558621.html'">
           <td><span class="nm">Construction of 4-laning of Southern bypass to Jhansi and connecting link for NH-44 & NH-39 from Km. 16+920 of NH-44 near Bangay Khas Village, Design Chainage 0+000 and terminating forming T Junction at Km. 6+650 of NH-39 near Orchha Tigela, Design Chainage 15+512 (Design Length – 15+512 km.) in the State of Madhya Pradesh and Uttar Pradesh on EPC Mode</span><span class="no">FP/MP/ROAD/558621/2025</span></td>
-          <td><span class="stg"><span class="dot" style="background:#2173d6"></span>DFO for Part-II</span></td>
-          <td class="hide-sm muted">An authority</td>
-          <td class="hide-sm num">10.42 ha</td>
-          <td class="num">9 rounds &middot; 13 objections</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#2173d6"></span>DFO for Part-II</span>
+            <span class="track"><i style="width:40%;background:#2173d6"></i></span>
+            <span class="step">step 4 of 10 </span>
+          </td>
+          <td class="hide-sm num">13<span class="openq">3 open</span></td>
           <td class="num muted">21/07/2026</td>
         </tr>
         <tr data-type="WL" onclick="location.href='proposal-440824.html'">
           <td><span class="nm">Diversion of Protected Forest Land, Area-4.6440 Hectare (Under Dalma Wildlife Sanctuary) for Utility Shifting of Up-Gradation to 4/6 Lane Elevated Corridor with paved shoulder configuration from kalimandir to Baliguma section (Km 241+940 to Km 251+962 in East Singhbhum district) of NH-33 under NHDP –III in the State of Jharkhand.</span><span class="no">WL/JH/ROAD/440824/2023</span></td>
-          <td><span class="stg"><span class="dot" style="background:#3f8f63"></span>Approved</span></td>
-          <td class="hide-sm muted">&mdash;</td>
-          <td class="hide-sm num">&mdash;</td>
-          <td class="num">4 rounds &middot; 4 objections</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#52a32f"></span>Permit issued</span>
+            <span class="track"><i style="width:100%;background:#52a32f"></i></span>
+            <span class="step">cleared</span>
+          </td>
+          <td class="hide-sm num">4</td>
           <td class="num muted">27/05/2026</td>
         </tr>
         <tr data-type="WL" onclick="location.href='proposal-569027.html'">
           <td><span class="nm">“Construction of 4 Lane Access Controlled Greenfield Section from Km 375 (Kannad, Telwadi to Km 390 (Bodhre) (Total Length 14.895 Km) in Autram Ghat including Tunnel (5.5 Km) & Viaduct (3.280 Km) in the state of Maharashtra”.</span><span class="no">WL/MH/ROAD/569027/2026</span></td>
-          <td><span class="stg"><span class="dot" style="background:#054489"></span>Wildlife Warden (Part-I)</span></td>
-          <td class="hide-sm muted">An authority</td>
-          <td class="hide-sm num">&mdash;</td>
-          <td class="num">1 round &middot; 1 objection</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#054489"></span>Wildlife Warden (Part-I)</span>
+            <span class="track"><i style="width:12%;background:#054489"></i></span>
+            <span class="step">step 1 of 8 </span>
+          </td>
+          <td class="hide-sm num">1</td>
           <td class="num muted">03/03/2026</td>
         </tr>
-        <tr data-type="WL" onclick="location.href='proposal-506479.html'">
+        <tr data-type="WL" class="ours" onclick="location.href='proposal-506479.html'">
           <td><span class="nm">4 laning of NH-75 Section- 2 from from Km. 97+515 (Udaypura) to Km. 147+540 (Bhogu) in the State of Jharkhand.</span><span class="no">WL/JH/ROAD/506479/2024</span></td>
-          <td><span class="stg"><span class="dot" style="background:#d85b81"></span>User Agency (UA)</span></td>
-          <td class="hide-sm muted">Us</td>
-          <td class="hide-sm num">&mdash;</td>
-          <td class="num">1 round &middot; 1 objection</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#d85b81"></span>User Agency (UA)</span>
+            <span class="track"><i style="width:0%;background:#d85b81"></i></span>
+            <span class="step"><b class="withus">with us</b></span>
+          </td>
+          <td class="hide-sm num">1<span class="openq">1 open</span></td>
           <td class="num muted">21/07/2026</td>
         </tr>
         <tr data-type="EC" onclick="location.href='proposal-556778.html'">
           <td><span class="nm">Six laning with Service Road on both sides of Indore Ring Road from Design Km 0+000 near village Khandwa on NH-52 to Km 140+388 end at Bhardala in the state of Madhya Pradesh under Bharatmala Pariyojana.</span><span class="no">IA/MP/INFRA1/556778/2025</span></td>
-          <td><span class="stg"><span class="dot" style="background:#3f8f63"></span>Approved</span></td>
-          <td class="hide-sm muted">&mdash;</td>
-          <td class="hide-sm num">&mdash;</td>
-          <td class="num">&mdash;</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#52a32f"></span>EC granted</span>
+            <span class="track"><i style="width:100%;background:#52a32f"></i></span>
+            <span class="step">cleared</span>
+          </td>
+          <td class="hide-sm num"><span class="muted">none</span></td>
           <td class="num muted">13/01/2026</td>
         </tr>
-        <tr data-type="EC" onclick="location.href='proposal-565744.html'">
+        <tr data-type="EC" class="ours" onclick="location.href='proposal-565744.html'">
           <td><span class="nm">Development of High Speed Access Controlled Corridor from Shamli - Gorakhpur (Phase-I) in the state of Uttar Pradesh (Package-3, From Ch. 142+195 to Ch. 214+350).</span><span class="no">IA/UP/INFRA1/565744/2026</span></td>
-          <td><span class="stg"><span class="dot" style="background:#d85b81"></span>User Agency (UA)</span></td>
-          <td class="hide-sm muted">Us</td>
-          <td class="hide-sm num">&mdash;</td>
-          <td class="num">&mdash;</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#d85b81"></span>User Agency (UA)</span>
+            <span class="track"><i style="width:0%;background:#d85b81"></i></span>
+            <span class="step"><b class="withus">with us</b></span>
+          </td>
+          <td class="hide-sm num"><span class="muted">none</span></td>
           <td class="num muted">05/03/2026</td>
         </tr>
         <tr data-type="EC" onclick="location.href='proposal-488577.html'">
           <td><span class="nm">Development of 6-lane access controlled greenfield highway from Ahmednagar - Solapur-Akkalkot Section: Greenfield Project Starts at Sarola Baddi Village near Ahmednagar (Km.290.000) and ends on NH-150C (MH/KN Border to Kurnool Section) near Umarge Village (Km.524.500) in the State of Maharashtra. Total Length -234.500 Km</span><span class="no">IA/MH/INFRA1/488577/2024</span></td>
-          <td><span class="stg"><span class="dot" style="background:#3f8f63"></span>Approved</span></td>
-          <td class="hide-sm muted">&mdash;</td>
-          <td class="hide-sm num">&mdash;</td>
-          <td class="num">3 rounds &middot; 3 objections</td>
+          <td class="stgcell">
+            <span class="stg"><span class="dot" style="background:#52a32f"></span>EC granted</span>
+            <span class="track"><i style="width:100%;background:#52a32f"></i></span>
+            <span class="step">cleared</span>
+          </td>
+          <td class="hide-sm num">3</td>
           <td class="num muted">17/04/2026</td>
         </tr>
       </tbody>
