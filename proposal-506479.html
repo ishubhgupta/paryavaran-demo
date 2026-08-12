@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/paryavaran.css?v=197747a857">
+<link rel="stylesheet" href="assets/paryavaran.css?v=6ccaf886bf">
 
 <script src="assets/htmx.min.js?v=449317ade7"></script>
 <script defer src="assets/alpinejs.cdn.min.js?v=d9662e2431"></script>
@@ -66,8 +66,8 @@
           filed <b>16/01/2026</b><span class="sep"></span>
           
           
-          open <b>207 days</b>
-            <span class="sep"></span>last activity <b>21d ago</b>
+          open <b>208 days</b>
+            <span class="sep"></span>last activity <b>22d ago</b>
           <span class="sep"></span>sent back <b>1</b><span class="sep"></span>
           <b>1</b> EDS
         </div>
@@ -75,7 +75,7 @@
     </div>
     <div class="right">
       
-        <span class="stbadge" style="background:#d85b81"><span class="d"></span>User Agency (UA)</span>
+        <span class="stbadge" style="background:#d85b81"><span class="d"></span>User Agency (Part-I &amp; Part-II)</span>
         <div class="kv" style="margin-top:9px">Pending with<br><b>NHAI</b></div>
       
     </div>
@@ -87,9 +87,13 @@
   
   <div class="jwrap">
     <h3 style="margin:0 0 3px;font-size:14.5px">Journey</h3>
+    
+    
     <div class="jlegend">
       <span class="k"><span class="sw" style="background:#5aa87f"></span> climbed to get here</span>
       <span class="k"><span class="sw" style="background:#b8384f"></span> was sent back here</span>
+      
+      <span class="k"><span class="sw" style="background:#6b8496"></span> handed back to us</span>
       <span class="k"><span class="sw" style="background:#2f7d55"></span> approved</span>
       <span class="k"><span style="color:#d99a10;font-size:13px">&#9671;</span> objection
         &mdash; open</span>
@@ -129,8 +133,8 @@
        
        
         x-data='{
-          rungs: ["submitted", "wlw_part1", "wlw_part3", "cwlw", "sbwl", "state_govt", "nbwl", "moefcc", "permit"],
-          labels: ["User Agency (UA)", "Wildlife Warden (Part-I)", "Wildlife Warden (Part-III)", "Chief Wildlife Warden (Part-IV)", "State Board for Wildlife", "State Secretary (Part-V)", "National Board for Wildlife", "MoEFCC", "Permit issued"],
+          rungs: ["submitted", "wlw_part3", "cwlw", "sbwl", "state_govt", "nbwl", "moefcc", "permit"],
+          labels: ["User Agency (Part-I \u0026 Part-II)", "Wildlife Warden (Part-III)", "Chief Wildlife Warden (Part-IV)", "State Board for Wildlife", "State Secretary (Part-V)", "National Board for Wildlife", "MoEFCC", "Permit issued"],
           by: "submitted",
           to: "",
           rows: [{}],
@@ -151,8 +155,6 @@
       
       <label class="flab">Raised by
         <select class="pa-select" name="raised_by_rung" x-model="by" @change="syncTo()" required>
-          
-          <option value="wlw_part1" >Wildlife Warden (Part-I)</option>
           
           <option value="wlw_part3" >Wildlife Warden (Part-III)</option>
           
@@ -179,8 +181,8 @@
         </select>
       </label>
       <label class="flab" style="max-width:150px">Raised on
-        <input class="pa-input" type="date" name="raised_on" value="2026-08-11"
-               max="2026-08-11" required>
+        <input class="pa-input" type="date" name="raised_on" value="2026-08-12"
+               max="2026-08-12" required>
       </label>
     </div>
 
@@ -208,7 +210,7 @@
               <input class="pa-input" name="reply_text" placeholder="What was sent back">
             </label>
             <label class="flab" style="max-width:150px">Replied on
-              <input class="pa-input" type="date" name="replied_on" max="2026-08-11">
+              <input class="pa-input" type="date" name="replied_on" max="2026-08-12">
             </label>
           </div>
         </div>
@@ -227,14 +229,14 @@
   
 
   
-  <div class="edsrow" id="eds-4063" x-data="{forward:false, edit:false}">
+  <div class="edsrow" id="eds-4095" x-data="{forward:false, edit:false}">
     <div class="edshead">
       <div style="min-width:0">
-        <div class="edspath">Wildlife Warden (Part-I) raised this</div>
+        <div class="edspath">Wildlife Warden (Part-III) raised this</div>
         <div class="edsmeta">
           21/07/2026
           <span class="sep"></span>0 of 1 answered
-          <span class="sep"></span>open 21d
+          <span class="sep"></span>open 22d
         </div>
       </div>
       <span class="pill open">Open</span>
@@ -242,11 +244,11 @@
 
     
     <div class="chain">
-      <span class="hop" style="background:var(--surface-3)">Wildlife Warden (Part-I)</span>
+      <span class="hop" style="background:var(--surface-3)">Wildlife Warden (Part-III)</span>
       
         <span class="arr">&rarr;</span>
         <span class="hop here">
-          User Agency (UA) <span style="opacity:.6">21/07/2026</span>
+          User Agency (Part-I &amp; Part-II) <span style="opacity:.6">21/07/2026</span>
         </span>
       
       
@@ -267,8 +269,8 @@
                     placeholder="What was sent back…"></textarea>
           <div class="frow" style="margin-top:8px">
             <label class="flab">Replied on
-              <input class="pa-input" type="date" name="replied_on" required max="2026-08-11"
-                     value="2026-08-11">
+              <input class="pa-input" type="date" name="replied_on" required max="2026-08-12"
+                     value="2026-08-12">
             </label>
             <button class="btn-sm primary" type="submit">Save reply</button>
             <button class="btn-sm" type="button" @click="answer=false">Cancel</button>
@@ -310,7 +312,7 @@
         answer it, or forward it again.</div>
       <div class="frow">
         <label class="flab">Forwarded on
-          <input class="pa-input" type="date" name="on" value="2026-08-11" max="2026-08-11" required>
+          <input class="pa-input" type="date" name="on" value="2026-08-12" max="2026-08-12" required>
         </label>
         <button class="btn-sm primary" type="submit">Forward</button>
         <button class="btn-sm" type="button" @click="forward=false">Cancel</button>
@@ -336,7 +338,6 @@
             <label class="flab">Desk
               <select class="pa-select" name="rung">
                 
-                <option value="wlw_part1">Wildlife Warden (Part-I)</option>
                 <option value="wlw_part3">Wildlife Warden (Part-III)</option>
                 <option value="cwlw">Chief Wildlife Warden (Part-IV)</option>
                 <option value="sbwl">State Board for Wildlife</option>
@@ -349,7 +350,7 @@
           </div>
           <div class="frow">
             <label class="flab">On
-              <input class="pa-input" type="date" name="on" value="2026-08-11" max="2026-08-11">
+              <input class="pa-input" type="date" name="on" value="2026-08-12" max="2026-08-12">
             </label>
             <button class="act primary" type="submit">Record</button>
           </div>
@@ -374,7 +375,7 @@
               </select>
             </label>
             <label class="flab">On
-              <input class="pa-input" type="date" name="on" value="2026-08-11" max="2026-08-11">
+              <input class="pa-input" type="date" name="on" value="2026-08-12" max="2026-08-12">
             </label>
           </div>
           <input class="pa-input" name="note" placeholder="Why (optional)" style="margin-bottom:9px">
@@ -393,8 +394,7 @@
              >
           <select class="pa-select" name="rung" style="margin-bottom:9px">
             <option value="submitted"
-              selected>User Agency (UA)</option><option value="wlw_part1"
-              >Wildlife Warden (Part-I)</option><option value="wlw_part3"
+              selected>User Agency (Part-I &amp; Part-II)</option><option value="wlw_part3"
               >Wildlife Warden (Part-III)</option><option value="cwlw"
               >Chief Wildlife Warden (Part-IV)</option><option value="sbwl"
               >State Board for Wildlife</option><option value="state_govt"
@@ -403,7 +403,7 @@
               >MoEFCC</option><option value="permit"
               >Permit issued</option>
           </select>
-          <input class="pa-input" type="date" name="on" value="2026-08-11" max="2026-08-11"
+          <input class="pa-input" type="date" name="on" value="2026-08-12" max="2026-08-12"
                  style="margin-bottom:9px">
           <button class="act" type="submit">Place the file here</button>
           <div id="ovr-err"></div>
@@ -423,7 +423,7 @@
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">Wildlife Warden (Part-I)</div>
+              <div class="mvlab">Wildlife Warden (Part-III)</div>
               <div class="mvmeta">16/01/2026
                 <span class="sep"></span>submitted
                 </div>
@@ -439,9 +439,8 @@
                 <label class="flab">Desk
                   <select class="pa-select" name="rung">
                     <option value="submitted"
-                      >User Agency (UA)</option><option value="wlw_part1"
-                      selected>Wildlife Warden (Part-I)</option><option value="wlw_part3"
-                      >Wildlife Warden (Part-III)</option><option value="cwlw"
+                      >User Agency (Part-I &amp; Part-II)</option><option value="wlw_part3"
+                      selected>Wildlife Warden (Part-III)</option><option value="cwlw"
                       >Chief Wildlife Warden (Part-IV)</option><option value="sbwl"
                       >State Board for Wildlife</option><option value="state_govt"
                       >State Secretary (Part-V)</option><option value="nbwl"
@@ -452,7 +451,7 @@
                 </label>
                 <label class="flab" style="max-width:150px">On
                   <input class="pa-input" type="date" name="on"
-                         value="2026-01-16" max="2026-08-11">
+                         value="2026-01-16" max="2026-08-12">
                 </label>
               </div>
               <div class="frow">
@@ -469,7 +468,7 @@
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">Wildlife Warden (Part-I)</div>
+              <div class="mvlab">Wildlife Warden (Part-III)</div>
               <div class="mvmeta">18/07/2026
                 <span class="sep"></span>moved
                 </div>
@@ -485,9 +484,8 @@
                 <label class="flab">Desk
                   <select class="pa-select" name="rung">
                     <option value="submitted"
-                      >User Agency (UA)</option><option value="wlw_part1"
-                      selected>Wildlife Warden (Part-I)</option><option value="wlw_part3"
-                      >Wildlife Warden (Part-III)</option><option value="cwlw"
+                      >User Agency (Part-I &amp; Part-II)</option><option value="wlw_part3"
+                      selected>Wildlife Warden (Part-III)</option><option value="cwlw"
                       >Chief Wildlife Warden (Part-IV)</option><option value="sbwl"
                       >State Board for Wildlife</option><option value="state_govt"
                       >State Secretary (Part-V)</option><option value="nbwl"
@@ -498,7 +496,7 @@
                 </label>
                 <label class="flab" style="max-width:150px">On
                   <input class="pa-input" type="date" name="on"
-                         value="2026-07-18" max="2026-08-11">
+                         value="2026-07-18" max="2026-08-12">
                 </label>
               </div>
               <div class="frow">
@@ -515,7 +513,7 @@
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">User Agency (UA)</div>
+              <div class="mvlab">User Agency (Part-I &amp; Part-II)</div>
               <div class="mvmeta">21/07/2026
                 <span class="sep"></span>eds raised
                 <span class="sep"></span>from an objection</div>
@@ -533,9 +531,9 @@
         <h3>At a glance</h3>
         
         <div class="rrow"><span>Current stage</span>
-          <b style="color:#d85b81">User Agency (UA)</b></div>
+          <b style="color:#d85b81">User Agency (Part-I &amp; Part-II)</b></div>
         <div class="rrow"><span>Open objections</span><b>1</b></div>
-        <div class="rrow"><span>Days open</span><b>207</b></div>
+        <div class="rrow"><span>Days open</span><b>208</b></div>
         <div class="rrow"><span>Times sent back</span><b>1</b></div>
         <div class="rrow"><span>Pending with</span><b>NHAI</b></div>
         
@@ -547,8 +545,18 @@
 </div>
 
 
-<script>window.PA_JOURNEY = {"eds": [{"answered": 0, "chain": [{"on": "2026-07-21", "rung": "User Agency (UA)"}], "count": 1, "date": "2026-07-21", "id": 4063, "objections": [{"on": null, "q": "KML area and applied area mismatch please correct it", "reply": null}], "raised_by": "Wildlife Warden (Part-I)", "s": 1, "status": "open", "to_s": 0, "turnaround": null}], "line": [{"back": false, "court": "NHAI", "date": "2026-01-16", "eds_id": null, "kind": "origin", "label": "User Agency (UA)", "no_duration": true, "note": "", "outcome": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-01-16", "eds_id": null, "kind": "submitted", "label": "Wildlife Warden (Part-I)", "note": "", "outcome": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2026-07-18", "eds_id": null, "kind": "moved", "label": "Wildlife Warden (Part-I)", "note": "Field visit done by DFO (WL)  [Recorded by the RO (not published on PARIVESH)]", "outcome": null, "s": 1}, {"back": true, "court": "NHAI", "date": "2026-07-21", "eds_id": 4063, "kind": "eds_raised", "label": "User Agency (UA)", "note": "", "outcome": null, "s": 0}], "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "wlw_part1", "label": "Wildlife Warden (Part-I)"}, {"color": "#2173d6", "key": "wlw_part3", "label": "Wildlife Warden (Part-III)"}, {"color": "#3f8ef4", "key": "cwlw", "label": "Chief Wildlife Warden (Part-IV)"}, {"color": "#683975", "key": "sbwl", "label": "State Board for Wildlife"}, {"color": "#9e7721", "key": "state_govt", "label": "State Secretary (Part-V)"}, {"color": "#068694", "key": "nbwl", "label": "National Board for Wildlife"}, {"color": "#23a1b1", "key": "moefcc", "label": "MoEFCC"}, {"color": "#52a32f", "key": "permit", "label": "Permit issued"}]};</script>
-<script src="assets/journey.js?v=f121a2021b"></script>
+<script>window.PA_JOURNEY = {"eds": [{"answered": 0, "chain": [{"on": "2026-07-21", "rung": "User Agency (Part-I \u0026 Part-II)"}], "count": 1, "date": "2026-07-21", "id": 4095, "objections": [{"on": null, "q": "KML area and applied area mismatch please correct it", "reply": null}], "raised_by": "Wildlife Warden (Part-III)", "s": 1, "status": "open", "to_s": 0, "turnaround": null}], "line": [{"back": false, "court": "NHAI", "date": "2026-01-16", "eds_id": null, "handover": false, "kind": "origin", "label": "User Agency (Part-I \u0026 Part-II)", "milestone": null, "no_duration": true, "note": "", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-01-16", "eds_id": null, "handover": false, "kind": "submitted", "label": "Wildlife Warden (Part-III)", "milestone": null, "note": "", "outcome": null, "part": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2026-07-18", "eds_id": null, "handover": false, "kind": "moved", "label": "Wildlife Warden (Part-III)", "milestone": null, "note": "Field visit done by DFO (WL)  [Recorded by the RO (not published on PARIVESH)]", "outcome": null, "part": null, "s": 1}, {"back": true, "court": "NHAI", "date": "2026-07-21", "eds_id": 4095, "handover": false, "kind": "eds_raised", "label": "User Agency (Part-I \u0026 Part-II)", "milestone": null, "note": "", "outcome": null, "part": null, "s": 0}], "phases": [], "remarks": {}, "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (Part-I \u0026 Part-II)"}, {"color": "#054489", "key": "wlw_part3", "label": "Wildlife Warden (Part-III)"}, {"color": "#2173d6", "key": "cwlw", "label": "Chief Wildlife Warden (Part-IV)"}, {"color": "#683975", "key": "sbwl", "label": "State Board for Wildlife"}, {"color": "#9e7721", "key": "state_govt", "label": "State Secretary (Part-V)"}, {"color": "#068694", "key": "nbwl", "label": "National Board for Wildlife"}, {"color": "#23a1b1", "key": "moefcc", "label": "MoEFCC"}, {"color": "#52a32f", "key": "permit", "label": "Permit issued"}]};
+  
+  window.PA_REMARKS = {
+    addUrl: "/paryavaran-ai/proposal/590/remarks",
+    delUrl: "/paryavaran-ai/remark/0/delete",
+    canWrite: true,
+    isAdmin: true,
+    email: "demo@nhai.org"
+  };</script>
+
+<script src="/paryavaran-ai/static/remarks.js?v=1786535548"></script>
+<script src="assets/journey.js?v=4d5a1b6d07"></script>
 
 
 <script src="assets/remarks.js?v=62ec105a0a"></script>

@@ -27,6 +27,12 @@
   var n = stages.length;
   var line = (J.line || []).filter(function (p) { return p.date; });
   var eds = J.eds || [];
+  /* The parts this clearance is applied for in. Empty on Forest and Wildlife,
+     which run one application end to end. An Environment Clearance is two
+     applications under two proposal numbers, and drawing them as one unbroken
+     chain leaves a granted ToR looking like a file stalled a third of the way
+     up a ladder whose upper rungs belong to an application not yet made. */
+  var phases = J.phases || [];
 
   if (!line.length) {
     host.innerHTML = '<div class="empty">Nothing recorded yet.</div>';
@@ -62,6 +68,10 @@
     }
     legs.push({ s: p.s, from: p.date, to: p.date, n: 1, kind: p.kind,
                 back: p.back, court: p.court, label: p.label, outcome: p.outcome,
+                /* Carried from the event that OPENED the leg: whether the file
+                   came down because a part was granted rather than because
+                   somebody objected. */
+                handover: !!p.handover, milestone: p.milestone || null,
                 noDuration: !!p.no_duration, events: [p] });
   });
 
@@ -114,13 +124,25 @@
     acc += g.bw + GAP;
   });
 
+  /* The parts divide the chart VERTICALLY, so the caption strip is a band along
+     the top rather than a gap opened between rungs. The two applications run one
+     after the other in time — ToR, then months of our own drafting, then the
+     clearance — and the ladder is the same nine rungs for both. Splitting the
+     rungs instead read as two halves of a single climb and put the handover, the
+     very thing that separates the applications, on the wrong side of the line. */
+  var BANDH = phases.length ? 19 : 0;
+
   var PW = acc - GAP + PADR;
-  var H = PADT + n * ROW + PADB;
-  var y = function (s) { return PADT + (n - 1 - s) * ROW + ROW / 2; };
+  var H = PADT + BANDH + n * ROW + PADB;
+  var y = function (s) { return PADT + BANDH + (n - 1 - s) * ROW + ROW / 2; };
   var current = legs[legs.length - 1].s;
 
   var UP = "#5aa87f", DOWN = "#b8384f", DONE = "#2f7d55";
   var INK = "#1b241f", MUTE = "#98a096";
+  /* A descent nobody objected to is not a setback, so it must not wear the
+     colour that means one. Slate reads as "the file moved and nothing went
+     wrong" — which for a granted ToR is the whole point. */
+  var HAND = "#6b8496";
 
   // ── the fixed label panel ────────────────────────────────────────────────
   var ax = ['<svg width="' + AXIS + '" height="' + H + '" class="jaxis" ' +
@@ -146,6 +168,42 @@
   var svg = ['<svg height="' + H + '" class="jsvg" style="width:100%;min-width:' +
              PW + 'px" font-family="Inter,system-ui,sans-serif">'];
 
+  /* Where each part starts and stops along the journey. A leg carries the part
+     it belongs to; a run of legs sharing one is a part's span. Spans are taken
+     from the legs rather than from the ladder because the same rung can serve
+     both applications — the User Agency lane is ours in Part A/B and ours again
+     in Part C. */
+  var spans = [];
+  if (phases.length) {
+    legs.forEach(function (g, i) {
+      var pi = g.events[0] && g.events[0].part;
+      if (pi == null) return;
+      var last = spans[spans.length - 1];
+      if (last && last.p === pi) { last.i1 = i; return; }
+      spans.push({ p: pi, i0: i, i1: i });
+    });
+    spans.forEach(function (sp) {
+      sp.x0 = xs[sp.i0] - 3;
+      sp.x1 = xs[sp.i1] + legs[sp.i1].bw + 3;
+    });
+    /* The last part runs to the right-hand edge: a part in progress has no end
+       yet, and stopping its band at the final bar would draw a boundary where
+       nothing has happened. */
+    if (spans.length) spans[spans.length - 1].open = true;
+  }
+
+  /* The band each part occupies, washed in behind everything else so the grid
+     and the current-row highlight sit on top of it rather than under it. */
+  spans.forEach(function (sp, k) {
+    if (!(k % 2)) return;
+    /* An open band is given the full width and left to run off the right edge,
+       where the SVG viewport clips it. Any finite number would stop short of
+       the panel edge on a wide screen and draw a boundary that is not there. */
+    svg.push('<rect x="' + sp.x0 + '" y="' + (PADT + BANDH - 6) +
+             '" width="' + (sp.open ? "100%" : (sp.x1 - sp.x0)) +
+             '" height="' + (H - PADB - PADT - BANDH + 10) + '" fill="#f3f2ec"/>');
+  });
+
   // hairline rules, not filled bands: the tabs carry the ink, the grid recedes
   stages.forEach(function (st, s) {
     var yy = y(s), on = s === current;
@@ -157,6 +215,25 @@
              '" stroke="#e7e5dd" stroke-width="1"/>');
   });
 
+  /* One rule per boundary between parts, floor to ceiling. Dashed and darker
+     than the grid, because it is not another step in the journey — it is where
+     one application ends and a separate one, under its own proposal number,
+     begins. Plus a caption naming each part, and for a part already granted,
+     what granting it means. */
+  spans.forEach(function (sp, k) {
+    var b = phases[sp.p] || {};
+    if (k) {
+      svg.push('<line x1="' + sp.x0 + '" y1="' + (PADT + BANDH - 6) + '" x2="' +
+               sp.x0 + '" y2="' + (H - PADB + 4) +
+               '" stroke="#b9c1b6" stroke-width="1.2" stroke-dasharray="4 4"/>');
+    }
+    var done = !!b.done;
+    svg.push('<text x="' + (sp.x0 + 4) + '" y="' + (PADT + 8) +
+             '" font-size="8.5" letter-spacing=".7" font-weight="700" fill="' +
+             (done ? "#3f7d5c" : "#a3aca0") + '">' +
+             esc((b.label || "").toUpperCase()) + "</text>");
+  });
+
   /* Risers first, so every tab is drawn over the line that feeds it and the
      join is hidden. Each one climbs (or drops) to the next rung's centre line,
      rounds the corner, and drives an arrowhead into that tab's left edge — so
@@ -164,7 +241,8 @@
   legs.forEach(function (g, i) {
     if (i === legs.length - 1) return;
     var y1 = y(g.s), y2 = y(legs[i + 1].s), up = legs[i + 1].s > g.s;
-    var xa = xs[i] + g.bw - 2, xb = xs[i + 1], col = up ? UP : DOWN;
+    var xa = xs[i] + g.bw - 2, xb = xs[i + 1];
+    var col = up ? UP : (legs[i + 1].handover ? HAND : DOWN);
     svg.push('<path d="M' + xa + " " + y1 + "V" + (y2 + (up ? TURN : -TURN)) +
              "Q" + xa + " " + y2 + " " + (xa + TURN) + " " + y2 +
              "H" + (xb - AHL) + '" fill="none" stroke="' + col +
@@ -175,7 +253,8 @@
 
   legs.forEach(function (g, i) {
     var yy = y(g.s), x0 = xs[i], w = g.bw;
-    var fill = g.isApproval ? DONE : g.up === null ? "#c9c4b4" : g.up ? UP : DOWN;
+    var fill = g.isApproval ? DONE : g.up === null ? "#c9c4b4"
+             : g.up ? UP : g.handover ? HAND : DOWN;
     g.x0 = x0; g.cy = yy;
 
     svg.push('<g class="jleg" data-i="' + i + '">');
@@ -200,6 +279,27 @@
                'pointer-events="none">' +
                (g.isApproval ? "Approved" : g.days + "d") + "</text>");
     }
+    svg.push("</g>");
+  });
+
+  /* The grant itself, called by name at the desk that gave it.
+
+     Without this the only trace of a granted ToR is an arrow pointing down —
+     and downwards is the direction a rejected file also travels. The chip sits
+     on the rung the file LEFT, at the moment it left, because that is where the
+     decision was taken; the bar below it is the months of our own work that
+     followed, which is a different fact. */
+  legs.forEach(function (g, i) {
+    if (!g.milestone || !i) return;
+    var from = legs[i - 1], tx = esc(g.milestone);
+    var w = tx.length * 4.9 + 15, x0 = xs[i - 1] + from.bw + 5;
+    var yy = y(from.s) - 13;
+    svg.push('<g pointer-events="none">');
+    svg.push('<rect x="' + x0 + '" y="' + (yy - 7.5) + '" width="' + w +
+             '" height="15" rx="7.5" fill="' + DONE + '"/>');
+    svg.push('<text x="' + (x0 + w / 2) + '" y="' + (yy + 3.6) +
+             '" text-anchor="middle" font-size="8.8" font-weight="700" ' +
+             'letter-spacing=".25" fill="#fff">' + tx + "</text>");
     svg.push("</g>");
   });
 
@@ -339,7 +439,12 @@
     if (g.up === false) {
       var e0 = g.events[0] || {};
       var why;
-      if (e0.kind === "eds_raised") why = "An objection sent the file back here.";
+      if (g.milestone) {
+        /* The best outcome this part has, and it arrives as a descent. Say so
+           first, before the reader reads the direction as a setback. */
+        why = "<b>" + esc(g.milestone) + ".</b> That part of the clearance is " +
+              "finished, so the file comes back to us to prepare the next one.";
+      } else if (e0.kind === "eds_raised") why = "An objection sent the file back here.";
       else if (e0.kind === "eds_forwarded") why = "The objection was forwarded down to here.";
       else if (e0.note) why = esc(e0.note) + " &mdash; not an objection.";
       else why = "PARIVESH records no reason for this step.";

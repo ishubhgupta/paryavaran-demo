@@ -73,6 +73,14 @@ a{color:inherit;text-decoration:none}
   backdrop-filter:blur(10px) saturate(1.2);padding:22px 34px 14px;border-bottom:1px solid var(--line)}
 .topbar h1{margin:0;font-size:22px;font-weight:700;letter-spacing:-.022em}
 .topbar .sub{color:var(--ink-2);font-size:13px;margin-top:3px}
+/* Which clearance the board is drawing. One ladder at a time, because the three
+   do not share rungs. */
+.ctabs{display:flex;gap:3px;margin:11px 0 2px;padding:3px;border-radius:9px;
+  background:var(--line);width:fit-content}
+.ctab{padding:5px 13px;border-radius:7px;font-size:12.5px;font-weight:600;
+  color:var(--ink-2);line-height:1.5;transition:background .13s,color .13s}
+.ctab:hover{color:var(--ink)}
+.ctab.on{background:var(--surface);color:var(--brand-ink);box-shadow:var(--sh-sm)}
 .content{padding:24px 34px 70px}
 .back{color:var(--brand-ink);font-size:13px;font-weight:600;display:inline-flex;gap:7px;align-items:center}
 .back:hover{gap:9px}
@@ -270,19 +278,13 @@ textarea.pa-input{resize:vertical}
   border-left:2.5px solid #c76073;color:#f0dbdf;line-height:1.45}
 .jtip .why b{color:#fff}
 
-@media (max-width:1100px){
-  .app{grid-template-columns:1fr}
-  .side{position:static;height:auto;flex-direction:row;align-items:center;gap:14px;overflow-x:auto}
-  .side .spacer,.side-foot{display:none}
-  .dgrid{grid-template-columns:1fr}
-}
-a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{
-  outline:2px solid var(--brand);outline-offset:2px}
+/* One project, two proposal numbers: which records the chart is drawing. */
+.jparts{font-size:11.5px;color:var(--ink-2);margin:0 0 7px}
+.jparts a{color:var(--brand-ink);font-weight:600}
 
-/* ── static demo only ──────────────────────────────────────────────────── */
-/* stage remarks. The chart says where a file is and how long it has been
-   there; it cannot say why. These notes are demo-side only — in the real tool
-   this is a table with an author and a per-request write check. */
+/* ── stage remarks ───────────────────────────────────────────────────────── */
+/* The running note against one visit to a desk: what the chart cannot derive.
+   Listed in the hover tooltip, written in a panel opened by clicking the bar. */
 .jtip .rk-line{color:#cfe0d6;line-height:1.45;margin-bottom:5px}
 .jtip .rk-by{display:block;color:#8ea79a;font-size:10px;margin-top:1px}
 .jtip .rk-more,.jtip .rk-none{color:#94a89c;font-size:10.5px}
@@ -308,6 +310,10 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .rk-del{margin-left:auto;border:none;background:none;color:var(--ink-3);
   font-size:10.5px;cursor:pointer;padding:0;text-decoration:underline}
 .rk-del:hover{color:#b8384f}
+/* The server's own refusal, shown verbatim: "Not permitted for your
+   jurisdiction" tells the user what to do next; "could not save" does not. */
+.rk-err{margin:0 14px 10px;padding:7px 9px;border-radius:6px;font-size:11.5px;
+  background:rgba(184,56,79,.09);color:#8f2b3d;line-height:1.45}
 .rk-add{border-top:1px solid var(--line);padding:10px 14px 12px;background:var(--surface-2)}
 .rk-add textarea{width:100%;box-sizing:border-box;resize:vertical;font:inherit;
   padding:8px 10px;border:1px solid var(--line-2);border-radius:7px;
@@ -319,6 +325,20 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
 .rk-save{margin-left:auto;border:none;border-radius:7px;padding:7px 14px;
   background:#2f7d55;color:#fff;font-weight:600;font-size:12px;cursor:pointer}
 .rk-save:hover{background:#276947}
+.rk-save:disabled{opacity:.55;cursor:default}
+
+@media (max-width:1100px){
+  .app{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;align-items:center;gap:14px;overflow-x:auto}
+  .side .spacer,.side-foot{display:none}
+  .dgrid{grid-template-columns:1fr}
+}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--brand);outline-offset:2px}
+
+/* ── static demo only ──────────────────────────────────────────────────── */
+/* The stage-remark styles now live in the app's own stylesheet, which this file
+   is appended to — the feature is real, and only its STORAGE is demo-side. */
 
 .pempty{padding:22px 14px;color:var(--ink-3);font-size:12.5px}
 /* the clearance band: which ladder the rows beneath it run on */
