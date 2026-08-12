@@ -28,16 +28,21 @@
 
   /* The clearance filter. Each type runs a different ladder, so the board shows
      one at a time rather than mixing chains in a single list. */
-  var tabs = [].slice.call(document.querySelectorAll(".ctab"));
+  var tabs = [].slice.call(document.querySelectorAll(".ctab[data-type]"));
   if (tabs.length) {
     var rows = [].slice.call(document.querySelectorAll(".plist tbody tr"));
     var empty = document.querySelector(".pempty");
     var pick = function (type) {
       var shown = 0;
       rows.forEach(function (r) {
-        var on = r.dataset.type === type;
+        /* A band heading carries no data-type of its own: it is read off the
+           row beneath it, so the heading follows whatever it introduces
+           instead of keeping a second copy of the answer. */
+        var head = r.classList.contains("grouphead");
+        var mine = head ? (r.nextElementSibling || {}).dataset : r.dataset;
+        var on = type === "all" || !!(mine && mine.type === type);
         r.hidden = !on;
-        if (on) shown++;
+        if (on && !head) shown++;
       });
       tabs.forEach(function (t) { t.classList.toggle("on", t.dataset.type === type); });
       if (empty) empty.hidden = shown > 0;
