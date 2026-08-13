@@ -46,80 +46,41 @@
   };
   var plural = function (k, w) { return k + " " + w + (k === 1 ? "" : "s"); };
 
-  /* Stage-II runs a ladder of its own after the Stage-I approval, and none of
-     it has happened yet: it is the PRESCRIBED timetable projected from the day
-     Stage-I was granted. Turning that into legs the chart can draw is the only
-     place this file invents a line rather than being handed one — so the flag
-     travels with every point, and the drawing dashes and fades whatever carries
-     it. A forecast that looks like a record is worse than no forecast. */
-  function projectedLine(plan, s2stages, recorded, done) {
-    var idx = {};
-    s2stages.forEach(function (st, i) { idx[st.key] = i; });
+  /* Which chart is on screen. Re-entrant: every piece of state below is
+     computed inside, so switching view is a redraw rather than a patch.
 
-    /* What has actually been recorded comes first and is drawn like any other
-       journey. Only the steps still OUTSTANDING are projected, and they are
-       re-based on the last real date rather than on the Stage-I approval — a
-       chain that started late is due late, and running the norms from the
-       original grant would quietly report time that has already been spent as
-       still available. */
-    var out = recorded.slice();
-    var rest = plan.slice(done);
-    if (!rest.length) return out;
+     Two stages, and BOTH are records. There is no projected timetable here any
+     more: the norms are published elsewhere, and a dozen invented dates in the
+     same panel competed for attention with the handful of real ones. */
+  var VIEWS = { s1: 0, s2: 1 };
 
-    /* The remaining chain starts when the file is due to LEAVE the desk it is
-       on, not the day it arrived there. Re-basing on the arrival date alone
-       projected the next desk to receive the file the same morning, silently
-       dropping the allowance of the step just recorded. */
-    var from = plan[0].from;
-    if (out.length) {
-      var d0 = new Date(out[out.length - 1].date);
-      d0.setDate(d0.getDate() + (plan[done - 1] ? plan[done - 1].days : 0));
-      from = d0.toISOString().slice(0, 10);
-    }
-    if (!out.length) {
-      out.push({ date: from, s: 0, kind: "origin", back: false,
-                 handover: false, milestone: null, part: null,
-                 label: s2stages[0].label, note: "Stage-I approved",
-                 court: "NHAI", outcome: null, eds_id: null,
-                 no_duration: true, projected: true });
-    }
-    /* Each point is stamped with the day the file ARRIVES at that desk, and the
-       clock is advanced afterwards. Stamping the end date instead makes every
-       bar show the duration of the step after it — a shift of one that is
-       invisible unless you total the chart against the norms. */
-    var prev = out[out.length - 1].s;
-    rest.forEach(function (st) {
-      out.push({ date: from, s: idx[st.rung], kind: "moved",
-                 back: idx[st.rung] < prev, handover: false, milestone: null,
-                 part: null, label: st.label, note: st.label, court: st.court,
-                 outcome: null, eds_id: null, projected: true });
-      prev = idx[st.rung];
-      var d = new Date(from);
-      d.setDate(d.getDate() + st.days);
-      from = d.toISOString().slice(0, 10);
-    });
-    return out;
+  /* Open on the stage the file is actually IN — but only once Stage-II has
+     something in it. Landing on an empty chart to prove a point is worse than
+     landing on the finished one. */
+  var view = (J.stage2 && (J.stage2.recorded || []).length) ? "s2" : "s1";
+  var lastShown = VIEWS[view];
+
+  /* The stage switch. Its own function because an empty Stage-II chart returns
+     early, and the tabs are the one thing that must still be there — without
+     them the reader would have no way back to Stage-I. */
+  function head0() {
+    if (!J.stage2) return "";
+    return '<div class="s2bar"><div class="s2tabs">' +
+      '<button type="button" class="s2t' + (view === "s1" ? " on" : "") +
+      '" data-view="s1">Stage-I</button>' +
+      '<button type="button" class="s2t' + (view === "s2" ? " on" : "") +
+      '" data-view="s2">Stage-II</button></div></div>';
   }
 
-  /* Which chart is on screen. Re-entrant: every piece of state below is
-     computed inside, so switching view is a redraw rather than a patch. */
-  /* Two stages, not three views. Which compensatory land the project uses is
-     answered on the form when the proposal is raised, so Stage-II follows the
-     recorded path instead of asking the reader to pick one. */
-  var VIEWS = { s1: 0, s2: 1 };
-  var known = J.stage2 && J.stage2.ca_land
-    ? String(J.stage2.ca_land).toUpperCase() : null;
-  /* Where nothing was recorded the chart still has to draw something, so it
-     draws the shorter path and says on the banner that it is an assumption.
-     Silently defaulting would under-state the timetable by three months while
-     looking exactly like somebody's answer. */
-  var path = known || "DFL";
-
-  /* Open on the stage the file is actually IN. Stage-I is done the moment it is
-     approved, and landing a reader on a finished chart when the live work has
-     moved to Stage-II shows them the part that no longer needs watching. */
-  var view = J.stage2 ? "s2" : "s1";
-  var lastShown = VIEWS[view];
+  function wireTabs() {
+    Array.prototype.forEach.call(host.querySelectorAll(".s2t"), function (b) {
+      b.addEventListener("click", function () {
+        if (b.dataset.view === view) return;
+        view = b.dataset.view;
+        draw();
+      });
+    });
+  }
 
   function draw() {
     var S2 = J.stage2;
@@ -127,8 +88,7 @@
     var stages = proj ? S2.stages : (J.stages || []);
     var n = stages.length;
     var line = proj
-      ? projectedLine(path === "NFL" ? S2.nfl : S2.dfl, stages,
-                      S2.recorded || [], S2.done || 0)
+      ? (S2.recorded || [])
       : (J.line || []).filter(function (p) { return p.date; });
     var eds = proj ? [] : (J.eds || []);
     /* The parts this clearance is applied for in. Empty on Forest and Wildlife,
@@ -141,6 +101,13 @@
   /* Merge consecutive events on the same rung into one occupancy leg. What a
      reader means by "the file was at the IRO" is the stretch it sat there, not
      each individual note against it. */
+  if (!line.length) {
+    host.innerHTML = head0() +
+      '<div class="empty">Nothing recorded on this stage yet.</div>';
+    wireTabs();
+    return;
+  }
+
   var legs = [];
   line.forEach(function (p) {
     var last = legs[legs.length - 1];
@@ -497,44 +464,7 @@
      "Approved" on a Forest file means STAGE-I — approval in principle. The
      diversion is not usable until Stage-II issues, and the chain between them
      was simply not on this page. */
-  var head = "";
-  if (J.stage2) {
-    head = '<div class="s2bar"><div class="s2tabs">' +
-      '<button type="button" class="s2t' + (view === "s1" ? " on" : "") +
-      '" data-view="s1">Stage-I</button>' +
-      '<button type="button" class="s2t' + (view === "s2" ? " on" : "") +
-      '" data-view="s2">Stage-II</button></div>';
-    if (proj) {
-      var done = S2.done || 0;
-      /* Due date off the DRAWN line, not off the untouched plan: once part of
-         the chain is recorded the rest is re-based on the last real date, and
-         quoting the original projection here would contradict the chart beside
-         it. */
-      var lastLeg = line[line.length - 1];
-      head += '<div class="s2note">' +
-        (done
-          ? "<b>" + plural(done, "step") + " recorded</b>, the rest projected. " +
-            "The dashed bars are the norms the process allows, run on from the " +
-            "last step actually recorded"
-          : "<b>Prescribed timetable, not a record.</b> Nothing below has " +
-            "happened: these are the norms the process allows, run on from the " +
-            "Stage-I approval of " + dmy(J.stage2.granted_on)) +
-        ". On them Stage-II falls due <b>" + dmy(lastLeg.date) + "</b> &mdash; " +
-        plural(days(J.stage2.granted_on, lastLeg.date), "day") +
-        " after Stage-I. " +
-        (known === "NFL"
-          ? "Compensatory land is <b>non-forest</b>, so it must be mutated to " +
-            "protected forest first &mdash; three months this chain would not " +
-            "otherwise carry."
-          : known === "DFL"
-            ? "Compensatory land is <b>degraded forest</b>, which needs no " +
-              "mutation."
-            : "The compensatory land was not recorded when this proposal was " +
-              "raised, so this <b>assumes degraded forest land</b>. If it is " +
-              "non-forest, add three months for mutation.") + "</div>";
-    }
-    head += "</div>";
-  }
+  var head = head0();
 
   host.innerHTML = head +
     '<div class="jgrid' + (proj ? " proj" : "") + '">' + ax.join("") +
@@ -548,13 +478,7 @@
   }
   lastShown = VIEWS[view];
 
-  Array.prototype.forEach.call(host.querySelectorAll(".s2t"), function (b) {
-    b.addEventListener("click", function () {
-      if (b.dataset.view === view) return;
-      view = b.dataset.view;
-      draw();
-    });
-  });
+  wireTabs();
 
   // ── tooltips ──────────────────────────────────────────────────────────────
   var tip = document.querySelector(".jtip");
@@ -724,6 +648,41 @@
     var t = document.querySelector(".jtip");
     if (t) t.classList.remove("on");
   }, { passive: true });
+
+  /* Redraw after anything that could have moved the file.
+
+     Every other panel on this page is a server-rendered fragment HTMX swaps in
+     place. The chart is not: it is an SVG this file builds from a payload
+     embedded at page load, so a swap left it drawing the position from BEFORE
+     the change. Recording a move, or an objection that came with its reply and
+     so sent the file straight back up, showed nothing at all until a reload —
+     which read as the action having failed.
+
+     The payload is re-fetched rather than patched, because position, bounce
+     count and objection markers are all DERIVED from the event log: guessing
+     the new shape in the browser would be a second implementation of the state
+     machine, free to disagree with the first. */
+  var pid = (window.PA_REMARKS && window.PA_REMARKS.addUrl || "")
+    .match(/\/proposal\/(\d+)\//);
+  if (pid) {
+    document.body.addEventListener("htmx:afterSwap", function (e) {
+      var t = e.detail && e.detail.xhr;
+      if (t && t.status >= 400) return;      // a refusal changed nothing
+      fetch("/paryavaran-ai/proposal/" + pid[1] + "/journey.json" +
+            window.location.search, { credentials: "same-origin" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (j) {
+          if (!j || j.error) return;
+          window.PA_JOURNEY = J = j;
+          /* Stay on the stage the reader was looking at — snapping back to
+             Stage-I after every entry would fight anyone recording a run of
+             Stage-II steps. */
+          if (view === "s2" && !J.stage2) view = "s1";
+          draw();
+        })
+        .catch(function () { /* leave the last good drawing up */ });
+    });
+  }
 
   draw();
 })();

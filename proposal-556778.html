@@ -6,7 +6,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/paryavaran.css?v=46c11fb85c">
+<link rel="stylesheet" href="assets/paryavaran.css?v=43f9690d3f">
 
 <script src="assets/htmx.min.js?v=449317ade7"></script>
 <script defer src="assets/alpinejs.cdn.min.js?v=d9662e2431"></script>
@@ -165,13 +165,15 @@
       
       <div class="panel" x-data="{open:false}">
         <button type="button" class="btn-sm" style="width:100%" @click="open=!open">
-          Movements (4)</button>
+          Movements (3)</button>
         <div class="ph" style="margin-top:6px">Correct a date or desk entered by mistake.</div>
         <div x-show="open" x-cloak style="margin-top:10px">
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">MoEFCC (MoM)</div>
+              <div class="mvlab">EAC Appraisal
+                
+                </div>
               <div class="mvmeta">02/11/2025
                 <span class="sep"></span>submitted
                 </div>
@@ -185,6 +187,7 @@
                  >
               <div class="frow">
                 <label class="flab">Desk
+                  
                   <select class="pa-select" name="rung">
                     <option value="submitted"
                       >User Agency (UA)</option><option value="moefcc_scrutiny"
@@ -192,8 +195,8 @@
                       >EAC (Terms of Reference)</option><option value="spcb"
                       >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
                       >Public Hearing</option><option value="moefcc_mom"
-                      selected>MoEFCC (MoM)</option><option value="eac_appraisal"
-                      >EAC Appraisal</option><option value="competent_authority"
+                      >MoEFCC (MoM)</option><option value="eac_appraisal"
+                      selected>EAC Appraisal</option><option value="competent_authority"
                       >Competent Authority</option><option value="ec_granted"
                       >EC granted</option>
                   </select>
@@ -217,53 +220,9 @@
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">EAC Appraisal</div>
-              <div class="mvmeta">01/12/2025
-                <span class="sep"></span>moved
+              <div class="mvlab">Competent Authority
+                
                 </div>
-            </div>
-            
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="moefcc_scrutiny"
-                      >MoEFCC (Scrutiny)</option><option value="eac_tor"
-                      >EAC (Terms of Reference)</option><option value="spcb"
-                      >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
-                      >Public Hearing</option><option value="moefcc_mom"
-                      >MoEFCC (MoM)</option><option value="eac_appraisal"
-                      selected>EAC Appraisal</option><option value="competent_authority"
-                      >Competent Authority</option><option value="ec_granted"
-                      >EC granted</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2025-12-01" max="2026-08-13">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
-            
-          </div>
-          
-          <div class="mvrow" x-data="{edit:false}">
-            <div style="flex:1;min-width:0">
-              <div class="mvlab">EAC Appraisal</div>
               <div class="mvmeta">09/12/2025
                 <span class="sep"></span>moved
                 </div>
@@ -277,6 +236,7 @@
                  >
               <div class="frow">
                 <label class="flab">Desk
+                  
                   <select class="pa-select" name="rung">
                     <option value="submitted"
                       >User Agency (UA)</option><option value="moefcc_scrutiny"
@@ -285,8 +245,8 @@
                       >State PCB (Draft EIA/EMP)</option><option value="public_hearing"
                       >Public Hearing</option><option value="moefcc_mom"
                       >MoEFCC (MoM)</option><option value="eac_appraisal"
-                      selected>EAC Appraisal</option><option value="competent_authority"
-                      >Competent Authority</option><option value="ec_granted"
+                      >EAC Appraisal</option><option value="competent_authority"
+                      selected>Competent Authority</option><option value="ec_granted"
                       >EC granted</option>
                   </select>
                 </label>
@@ -309,7 +269,9 @@
           
           <div class="mvrow" x-data="{edit:false}">
             <div style="flex:1;min-width:0">
-              <div class="mvlab">EC granted</div>
+              <div class="mvlab">EC granted
+                
+                </div>
               <div class="mvmeta">13/01/2026
                 <span class="sep"></span>moved
                 </div>
@@ -323,6 +285,7 @@
                  >
               <div class="frow">
                 <label class="flab">Desk
+                  
                   <select class="pa-select" name="rung">
                     <option value="submitted"
                       >User Agency (UA)</option><option value="moefcc_scrutiny"
@@ -376,10 +339,10 @@
 </div>
 
 
-<script>window.PA_JOURNEY = {"eds": [], "line": [{"back": false, "court": "NHAI", "date": "2023-08-17", "eds_id": null, "handover": false, "kind": "origin", "label": "User Agency (UA)", "milestone": null, "no_duration": true, "note": "", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2023-08-17", "eds_id": null, "handover": false, "kind": "submitted", "label": "MoEFCC (Scrutiny)", "milestone": null, "note": "", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2023-08-24", "eds_id": null, "handover": false, "kind": "moved", "label": "MoEFCC (Scrutiny)", "milestone": null, "note": "Under Examination", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2023-08-30", "eds_id": null, "handover": false, "kind": "moved", "label": "MoEFCC (Scrutiny)", "milestone": null, "note": "Proposal Acceptance", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2023-08-30", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC (Terms of Reference)", "milestone": null, "note": "Proposal Accepted and Referred to EAC", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 2}, {"back": false, "court": "AUTHORITY", "date": "2023-09-06", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC (Terms of Reference)", "milestone": null, "note": "EAC meeting held", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 2}, {"back": false, "court": "AUTHORITY", "date": "2023-09-19", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC (Terms of Reference)", "milestone": null, "note": "ToR under issue", "outcome": null, "part": 0, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 2}, {"back": true, "court": "NHAI", "date": "2023-10-26", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": "ToR granted", "note": "ToR Granted; with us to draft the EIA", "outcome": null, "part": 1, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2024-03-29", "eds_id": null, "handover": false, "kind": "moved", "label": "Public Hearing", "milestone": null, "note": "Public hearing held", "outcome": null, "part": 1, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 4}, {"back": true, "court": "NHAI", "date": "2024-04-03", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "EIA/EMP preparation", "outcome": null, "part": 1, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "NHAI", "date": "2025-10-27", "eds_id": null, "handover": false, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "EIA/EMP submitted", "outcome": null, "part": 1, "proposal_id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2025-11-02", "eds_id": null, "handover": false, "kind": "submitted", "label": "MoEFCC (MoM)", "milestone": null, "note": "Under Examination", "outcome": null, "part": 1, "proposal_id": 609, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 5}, {"back": false, "court": "AUTHORITY", "date": "2025-12-01", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC Appraisal", "milestone": null, "note": "Proposal Accepted and Referred to EAC", "outcome": null, "part": 1, "proposal_id": 609, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2025-12-09", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC Appraisal", "milestone": null, "note": "Considered by the EAC", "outcome": null, "part": 1, "proposal_id": 609, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-01-13", "eds_id": null, "handover": false, "kind": "moved", "label": "EC granted", "milestone": null, "note": "EC Granted", "outcome": null, "part": 1, "proposal_id": 609, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 8}], "parts": [{"id": 608, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023"}, {"id": 609, "proposal_no": "IA/MP/INFRA1/556778/2025"}], "phases": [{"done": true, "from_s": 0, "grant": "ToR granted", "label": "Part A/B \u2014 Terms of Reference", "to_s": 2}, {"done": true, "from_s": 3, "grant": "EC granted", "label": "Part C \u2014 Environment Clearance", "to_s": 8}], "remarks": {}, "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#0b5ab3", "key": "moefcc_scrutiny", "label": "MoEFCC (Scrutiny)"}, {"color": "#054489", "key": "eac_tor", "label": "EAC (Terms of Reference)"}, {"color": "#825f0a", "key": "spcb", "label": "State PCB (Draft EIA/EMP)"}, {"color": "#b8802a", "key": "public_hearing", "label": "Public Hearing"}, {"color": "#068694", "key": "moefcc_mom", "label": "MoEFCC (MoM)"}, {"color": "#2173d6", "key": "eac_appraisal", "label": "EAC Appraisal"}, {"color": "#23a1b1", "key": "competent_authority", "label": "Competent Authority"}, {"color": "#52a32f", "key": "ec_granted", "label": "EC granted"}]};
+<script>window.PA_JOURNEY = {"eds": [], "line": [{"back": false, "court": "NHAI", "date": "2023-08-17", "eds_id": null, "handover": false, "kind": "origin", "label": "User Agency (UA)", "milestone": null, "no_duration": true, "note": "", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2023-08-17", "eds_id": null, "handover": false, "kind": "submitted", "label": "MoEFCC (Scrutiny)", "milestone": null, "note": "", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2023-08-24", "eds_id": null, "handover": false, "kind": "moved", "label": "MoEFCC (Scrutiny)", "milestone": null, "note": "Under Examination", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2023-08-30", "eds_id": null, "handover": false, "kind": "moved", "label": "MoEFCC (Scrutiny)", "milestone": null, "note": "Proposal Acceptance", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2023-08-30", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC (Terms of Reference)", "milestone": null, "note": "Proposal Accepted and Referred to EAC", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 2}, {"back": false, "court": "AUTHORITY", "date": "2023-09-06", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC (Terms of Reference)", "milestone": null, "note": "EAC meeting held", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 2}, {"back": false, "court": "AUTHORITY", "date": "2023-09-19", "eds_id": null, "handover": false, "kind": "moved", "label": "EAC (Terms of Reference)", "milestone": null, "note": "ToR under issue", "outcome": null, "part": 0, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 2}, {"back": true, "court": "NHAI", "date": "2023-10-26", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": "ToR granted", "note": "ToR Granted; with us to draft the EIA", "outcome": null, "part": 1, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2024-03-29", "eds_id": null, "handover": false, "kind": "moved", "label": "Public Hearing", "milestone": null, "note": "Public hearing held", "outcome": null, "part": 1, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 4}, {"back": true, "court": "NHAI", "date": "2024-04-03", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "EIA/EMP preparation", "outcome": null, "part": 1, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "NHAI", "date": "2025-10-27", "eds_id": null, "handover": false, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "EIA/EMP submitted", "outcome": null, "part": 1, "proposal_id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023", "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2025-11-02", "eds_id": null, "handover": false, "kind": "submitted", "label": "EAC Appraisal", "milestone": null, "note": "Referred to the EAC", "outcome": null, "part": 1, "proposal_id": 615, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2025-12-09", "eds_id": null, "handover": false, "kind": "moved", "label": "Competent Authority", "milestone": null, "note": "Considered by the EAC; with the Competent Authority", "outcome": null, "part": 1, "proposal_id": 615, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 7}, {"back": false, "court": "AUTHORITY", "date": "2026-01-13", "eds_id": null, "handover": false, "kind": "moved", "label": "EC granted", "milestone": null, "note": "EC Granted", "outcome": null, "part": 1, "proposal_id": 615, "proposal_no": "IA/MP/INFRA1/556778/2025", "s": 8}], "parts": [{"id": 614, "proposal_no": "IA/MP/INFRA1/TOR-NUMBER-NOT-SUPPLIED/2023"}, {"id": 615, "proposal_no": "IA/MP/INFRA1/556778/2025"}], "phases": [{"done": true, "from_s": 0, "grant": "ToR granted", "label": "Part A/B \u2014 Terms of Reference", "to_s": 2}, {"done": true, "from_s": 3, "grant": "EC granted", "label": "Part C \u2014 Environment Clearance", "to_s": 8}], "remarks": {}, "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#0b5ab3", "key": "moefcc_scrutiny", "label": "MoEFCC (Scrutiny)"}, {"color": "#054489", "key": "eac_tor", "label": "EAC (Terms of Reference)"}, {"color": "#825f0a", "key": "spcb", "label": "State PCB (Draft EIA/EMP)"}, {"color": "#b8802a", "key": "public_hearing", "label": "Public Hearing"}, {"color": "#068694", "key": "moefcc_mom", "label": "MoEFCC (MoM)"}, {"color": "#2173d6", "key": "eac_appraisal", "label": "EAC Appraisal"}, {"color": "#23a1b1", "key": "competent_authority", "label": "Competent Authority"}, {"color": "#52a32f", "key": "ec_granted", "label": "EC granted"}]};
   
   window.PA_REMARKS = {
-    addUrl: "/paryavaran-ai/proposal/609/remarks",
+    addUrl: "/paryavaran-ai/proposal/615/remarks",
     delUrl: "/paryavaran-ai/remark/0/delete",
     canWrite: true,
     isAdmin: true,
@@ -387,7 +350,7 @@
   };</script>
 
 <script src="/paryavaran-ai/static/remarks.js?v=1786535548"></script>
-<script src="assets/journey.js?v=e0fa0705c6"></script>
+<script src="assets/journey.js?v=1c7cd203ef"></script>
 
 
 <script src="assets/remarks.js?v=62ec105a0a"></script>
