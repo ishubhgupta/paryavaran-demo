@@ -77,7 +77,7 @@
             
           
           <span class="sep"></span>sent back <b>1</b><span class="sep"></span>
-          <b>0</b> EDS
+          <b>1</b> EDS
         </div>
       
     </div>
@@ -136,7 +136,57 @@
   
 
   
-  <div class="empty">No objections recorded yet.</div>
+  <div class="edsrow" id="eds-4124" x-data="{forward:false, edit:false}">
+    <div class="edshead">
+      <div style="min-width:0">
+        <div class="edspath">PSC-I (Nodal Officer) raised this</div>
+        <div class="edsmeta">
+          06/02/2026
+          <span class="sep"></span>1 of 1 answered
+          
+            <span class="sep"></span>closed in 0d
+          
+        </div>
+      </div>
+      <span class="pill answered">Answered</span>
+    </div>
+
+    
+    <div class="chain">
+      <span class="hop" style="background:var(--surface-3)">PSC-I (Nodal Officer)</span>
+      
+        <span class="arr">&rarr;</span>
+        <span class="hop ">
+          User Agency (UA) <span style="opacity:.6">06/02/2026</span>
+        </span>
+      
+      
+        <span class="arr">&rarr;</span>
+        <span class="hop" style="background:var(--good-soft);color:#1f6b3f;font-weight:600">
+          back to PSC-I (Nodal Officer) <span style="opacity:.7">06/02/2026</span></span>
+      
+    </div>
+
+    
+    <div class="objitem" x-data="{answer:false}">
+      <div class="objnum done">1</div>
+      <div style="flex:1;min-width:0">
+        <div class="q">EDS raised by the Member Secretary of the State. PARIVESH records no detail against it beyond the label.</div>
+        
+        
+        <div class="replybox">
+          <div class="rl">Our reply &middot; 06/02/2026</div>
+          <div class="rt">Both Navsari &amp; Valsad SF Division have been mentioned in Section 7 of Form 1. KML for both divisions have already been uploaded.</div>
+        </div>
+        
+        
+      </div>
+      
+    </div>
+    
+
+    
+  </div>
   
 </div>
       
@@ -238,48 +288,10 @@
                 
                 </div>
               <div class="mvmeta">06/02/2026
-                <span class="sep"></span>moved
-                </div>
+                <span class="sep"></span>eds raised
+                <span class="sep"></span>from an objection</div>
             </div>
             
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      selected>User Agency (UA)</option><option value="dfo_scrutiny"
-                      >DFO Scrutiny</option><option value="cf_inspection"
-                      >CF/CCF Site Inspection</option><option value="psc1"
-                      >PSC-I (Nodal Officer)</option><option value="dfo_part2"
-                      >DFO for Part-II</option><option value="cf_reco"
-                      >CF/CCF Recommendations</option><option value="psc2"
-                      >PSC-II (Nodal Officer)</option><option value="state_govt"
-                      >State Secretary</option><option value="iro"
-                      >IRO</option><option value="moefcc"
-                      >MoEFCC Hq</option><option value="diversion"
-                      >Approved</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-02-06" max="2026-08-13">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
             
           </div>
           
@@ -289,48 +301,10 @@
                 
                 </div>
               <div class="mvmeta">06/02/2026
-                <span class="sep"></span>moved
-                </div>
+                <span class="sep"></span>eds answered
+                <span class="sep"></span>from an objection</div>
             </div>
             
-            <button type="button" class="btn-sm" @click="edit=!edit">edit</button>
-            
-            
-            <form class="editbox" x-show="edit" x-cloak style="flex-basis:100%;margin-top:8px"
-                 
-                 >
-              <div class="frow">
-                <label class="flab">Desk
-                  
-                  <select class="pa-select" name="rung">
-                    <option value="submitted"
-                      >User Agency (UA)</option><option value="dfo_scrutiny"
-                      >DFO Scrutiny</option><option value="cf_inspection"
-                      >CF/CCF Site Inspection</option><option value="psc1"
-                      selected>PSC-I (Nodal Officer)</option><option value="dfo_part2"
-                      >DFO for Part-II</option><option value="cf_reco"
-                      >CF/CCF Recommendations</option><option value="psc2"
-                      >PSC-II (Nodal Officer)</option><option value="state_govt"
-                      >State Secretary</option><option value="iro"
-                      >IRO</option><option value="moefcc"
-                      >MoEFCC Hq</option><option value="diversion"
-                      >Approved</option>
-                  </select>
-                </label>
-                <label class="flab" style="max-width:150px">On
-                  <input class="pa-input" type="date" name="on"
-                         value="2026-02-06" max="2026-08-13">
-                </label>
-              </div>
-              <div class="frow">
-                <button class="btn-sm primary" type="submit">Save</button>
-                <button class="btn-sm danger" type="button"
-                       
-                       
-                       >Delete</button>
-                <button class="btn-sm" type="button" @click="edit=false">Cancel</button>
-              </div>
-            </form>
             
           </div>
           
@@ -1400,10 +1374,10 @@
 </div>
 
 
-<script>window.PA_JOURNEY = {"eds": [], "line": [{"back": false, "court": "NHAI", "date": "2026-01-12", "eds_id": null, "handover": false, "kind": "origin", "label": "User Agency (UA)", "milestone": null, "no_duration": true, "note": "", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-01-12", "eds_id": null, "handover": false, "kind": "submitted", "label": "PSC-I (Nodal Officer)", "milestone": null, "note": "With PSC-I; EDS raised", "outcome": null, "part": null, "s": 3}, {"back": true, "court": "NHAI", "date": "2026-02-06", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "Member Secretary of the State raised an EDS - PARIVESH records no detail beyond the label. Our reply: both Navsari and Valsad SF Division are named in Section 7 of Form 1, and the KML for both divisions was already uploaded.", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-02-06", "eds_id": null, "handover": false, "kind": "moved", "label": "PSC-I (Nodal Officer)", "milestone": null, "note": "PSC-I", "outcome": null, "part": null, "s": 3}, {"back": false, "court": "AUTHORITY", "date": "2026-02-10", "eds_id": null, "handover": false, "kind": "moved", "label": "DFO for Part-II", "milestone": null, "note": "DCF/DFO", "outcome": null, "part": null, "s": 4}, {"back": false, "court": "AUTHORITY", "date": "2026-03-16", "eds_id": null, "handover": false, "kind": "moved", "label": "PSC-II (Nodal Officer)", "milestone": null, "note": "PSC-II", "outcome": null, "part": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-03-17", "eds_id": null, "handover": false, "kind": "moved", "label": "PSC-II (Nodal Officer)", "milestone": null, "note": "Nodal Officer", "outcome": null, "part": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-03-17", "eds_id": null, "handover": false, "kind": "moved", "label": "State Secretary", "milestone": null, "note": "State Government", "outcome": null, "part": null, "s": 7}, {"back": false, "court": "AUTHORITY", "date": "2026-03-21", "eds_id": null, "handover": false, "kind": "moved", "label": "IRO", "milestone": null, "note": "IRO/MoEFCC (TO/AIGF/IRO Head)", "outcome": null, "part": null, "s": 8}, {"back": false, "court": "AUTHORITY", "date": "2026-03-25", "eds_id": null, "handover": false, "kind": "moved", "label": "MoEFCC Hq", "milestone": null, "note": "REC", "outcome": null, "part": null, "s": 9}, {"back": false, "court": "AUTHORITY", "date": "2026-04-06", "eds_id": null, "handover": false, "kind": "moved", "label": "Approved", "milestone": null, "note": "Stage-I approval", "outcome": null, "part": null, "s": 10}], "phases": [], "remarks": {}, "stage2": {"ca_land": null, "complete": true, "current": "s2_final", "current_label": "Stage-II Approved", "done": 14, "granted_on": "2026-04-06", "recorded": [{"back": false, "court": "AUTHORITY", "date": "2026-04-07", "eds_id": null, "handover": false, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO for demand note", "outcome": null, "part": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2026-04-13", "eds_id": null, "handover": false, "kind": "moved", "label": "Nodal Officer", "milestone": null, "note": "Nodal Officer for demand note", "outcome": null, "part": null, "s": 2}, {"back": true, "court": "NHAI", "date": "2026-04-14", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "With us", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-04-17", "eds_id": null, "handover": false, "kind": "moved", "label": "FRA Approval (DC)", "milestone": null, "note": "FRA approval (Navsari DC 10.04, Valsad DC 17.04); ran in parallel from 12.01", "outcome": null, "part": null, "s": 3}, {"back": true, "court": "AUTHORITY", "date": "2026-04-30", "eds_id": null, "handover": true, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO", "outcome": null, "part": null, "s": 1}, {"back": true, "court": "NHAI", "date": "2026-05-01", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "DFO: complete the boundary demarcation and attach photographs with GPS, and attach the whole PDF of the compliance report. Our reply: whole compliance PDF (65 pages) enclosed vide NHAI letter no. 722 dated 30.04.2026; demarcation photos at pages 52-65.", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-05-04", "eds_id": null, "handover": false, "kind": "moved", "label": "Working permission (State)", "milestone": null, "note": "Working permission issued by the State", "outcome": null, "part": null, "s": 5}, {"back": true, "court": "AUTHORITY", "date": "2026-05-07", "eds_id": null, "handover": true, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO", "outcome": null, "part": null, "s": 1}, {"back": true, "court": "NHAI", "date": "2026-05-12", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "DFO: attach photographs of the boundary demarcation. Our reply: demarcation photos enclosed as Annexure 5.", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-05-12", "eds_id": null, "handover": false, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO", "outcome": null, "part": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2026-05-16", "eds_id": null, "handover": false, "kind": "moved", "label": "Nodal Officer", "milestone": null, "note": "Nodal Officer", "outcome": null, "part": null, "s": 2}, {"back": false, "court": "AUTHORITY", "date": "2026-05-20", "eds_id": null, "handover": false, "kind": "moved", "label": "State Government", "milestone": null, "note": "State Government", "outcome": null, "part": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-06-11", "eds_id": null, "handover": false, "kind": "moved", "label": "IRO / MoEFCC", "milestone": null, "note": "IRO/MoEFCC (TO/AIGF/IRO Head)", "outcome": null, "part": null, "s": 7}, {"back": false, "court": "AUTHORITY", "date": "2026-06-18", "eds_id": null, "handover": false, "kind": "moved", "label": "Stage-II Approved", "milestone": null, "note": "Stage-II approval", "outcome": null, "part": null, "s": 8}], "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "s2_dfo", "label": "DFO"}, {"color": "#2173d6", "key": "s2_nodal", "label": "Nodal Officer"}, {"color": "#7a5195", "key": "s2_fra", "label": "FRA Approval (DC)"}, {"color": "#a1662f", "key": "s2_mutation", "label": "Mutation of NFL (Revenue)"}, {"color": "#c49a2e", "key": "s2_permit", "label": "Working permission (State)"}, {"color": "#9e7721", "key": "s2_state", "label": "State Government"}, {"color": "#068694", "key": "s2_iro", "label": "IRO / MoEFCC"}, {"color": "#52a32f", "key": "s2_final", "label": "Stage-II Approved"}]}, "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "dfo_scrutiny", "label": "DFO Scrutiny"}, {"color": "#0b5ab3", "key": "cf_inspection", "label": "CF/CCF Site Inspection"}, {"color": "#683975", "key": "psc1", "label": "PSC-I (Nodal Officer)"}, {"color": "#2173d6", "key": "dfo_part2", "label": "DFO for Part-II"}, {"color": "#3f8ef4", "key": "cf_reco", "label": "CF/CCF Recommendations"}, {"color": "#81518f", "key": "psc2", "label": "PSC-II (Nodal Officer)"}, {"color": "#9e7721", "key": "state_govt", "label": "State Secretary"}, {"color": "#068694", "key": "iro", "label": "IRO"}, {"color": "#23a1b1", "key": "moefcc", "label": "MoEFCC Hq"}, {"color": "#52a32f", "key": "diversion", "label": "Approved"}]};
+<script>window.PA_JOURNEY = {"eds": [{"answered": 1, "chain": [{"on": "2026-02-06", "rung": "User Agency (UA)"}], "count": 1, "date": "2026-02-06", "id": 4124, "objections": [{"on": "2026-02-06", "q": "EDS raised by the Member Secretary of the State. PARIVESH records no detail against it beyond the label.", "reply": "Both Navsari \u0026 Valsad SF Division have been mentioned in Section 7 of Form 1. KML for both divisions have already been uploaded."}], "raised_by": "PSC-I (Nodal Officer)", "s": 3, "status": "answered", "to_s": 0, "turnaround": 0}], "line": [{"back": false, "court": "NHAI", "date": "2026-01-12", "eds_id": null, "handover": false, "kind": "origin", "label": "User Agency (UA)", "milestone": null, "no_duration": true, "note": "", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-01-12", "eds_id": null, "handover": false, "kind": "submitted", "label": "PSC-I (Nodal Officer)", "milestone": null, "note": "With PSC-I; EDS raised", "outcome": null, "part": null, "s": 3}, {"back": true, "court": "NHAI", "date": "2026-02-06", "eds_id": 4124, "handover": false, "kind": "eds_raised", "label": "User Agency (UA)", "milestone": null, "note": "", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-02-06", "eds_id": 4124, "handover": false, "kind": "eds_answered", "label": "PSC-I (Nodal Officer)", "milestone": null, "note": "", "outcome": null, "part": null, "s": 3}, {"back": false, "court": "AUTHORITY", "date": "2026-02-10", "eds_id": null, "handover": false, "kind": "moved", "label": "DFO for Part-II", "milestone": null, "note": "DCF/DFO", "outcome": null, "part": null, "s": 4}, {"back": false, "court": "AUTHORITY", "date": "2026-03-16", "eds_id": null, "handover": false, "kind": "moved", "label": "PSC-II (Nodal Officer)", "milestone": null, "note": "PSC-II", "outcome": null, "part": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-03-17", "eds_id": null, "handover": false, "kind": "moved", "label": "PSC-II (Nodal Officer)", "milestone": null, "note": "Nodal Officer", "outcome": null, "part": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-03-17", "eds_id": null, "handover": false, "kind": "moved", "label": "State Secretary", "milestone": null, "note": "State Government", "outcome": null, "part": null, "s": 7}, {"back": false, "court": "AUTHORITY", "date": "2026-03-21", "eds_id": null, "handover": false, "kind": "moved", "label": "IRO", "milestone": null, "note": "IRO/MoEFCC (TO/AIGF/IRO Head)", "outcome": null, "part": null, "s": 8}, {"back": false, "court": "AUTHORITY", "date": "2026-03-25", "eds_id": null, "handover": false, "kind": "moved", "label": "MoEFCC Hq", "milestone": null, "note": "REC", "outcome": null, "part": null, "s": 9}, {"back": false, "court": "AUTHORITY", "date": "2026-04-06", "eds_id": null, "handover": false, "kind": "moved", "label": "Approved", "milestone": null, "note": "Stage-I approval", "outcome": null, "part": null, "s": 10}], "phases": [], "remarks": {}, "stage2": {"ca_land": null, "complete": true, "current": "s2_final", "current_label": "Stage-II Approved", "done": 14, "granted_on": "2026-04-06", "recorded": [{"back": false, "court": "AUTHORITY", "date": "2026-04-07", "eds_id": null, "handover": false, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO for demand note", "outcome": null, "part": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2026-04-13", "eds_id": null, "handover": false, "kind": "moved", "label": "Nodal Officer", "milestone": null, "note": "Nodal Officer for demand note", "outcome": null, "part": null, "s": 2}, {"back": true, "court": "NHAI", "date": "2026-04-14", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "With us", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-04-17", "eds_id": null, "handover": false, "kind": "moved", "label": "FRA Approval (DC)", "milestone": null, "note": "FRA approval (Navsari DC 10.04, Valsad DC 17.04); ran in parallel from 12.01", "outcome": null, "part": null, "s": 3}, {"back": true, "court": "AUTHORITY", "date": "2026-04-30", "eds_id": null, "handover": true, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO", "outcome": null, "part": null, "s": 1}, {"back": true, "court": "NHAI", "date": "2026-05-01", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "DFO: complete the boundary demarcation and attach photographs with GPS, and attach the whole PDF of the compliance report. Our reply: whole compliance PDF (65 pages) enclosed vide NHAI letter no. 722 dated 30.04.2026; demarcation photos at pages 52-65.", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-05-04", "eds_id": null, "handover": false, "kind": "moved", "label": "Working permission (State)", "milestone": null, "note": "Working permission issued by the State", "outcome": null, "part": null, "s": 5}, {"back": true, "court": "AUTHORITY", "date": "2026-05-07", "eds_id": null, "handover": true, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO", "outcome": null, "part": null, "s": 1}, {"back": true, "court": "NHAI", "date": "2026-05-12", "eds_id": null, "handover": true, "kind": "moved", "label": "User Agency (UA)", "milestone": null, "note": "DFO: attach photographs of the boundary demarcation. Our reply: demarcation photos enclosed as Annexure 5.", "outcome": null, "part": null, "s": 0}, {"back": false, "court": "AUTHORITY", "date": "2026-05-12", "eds_id": null, "handover": false, "kind": "moved", "label": "DFO", "milestone": null, "note": "DFO", "outcome": null, "part": null, "s": 1}, {"back": false, "court": "AUTHORITY", "date": "2026-05-16", "eds_id": null, "handover": false, "kind": "moved", "label": "Nodal Officer", "milestone": null, "note": "Nodal Officer", "outcome": null, "part": null, "s": 2}, {"back": false, "court": "AUTHORITY", "date": "2026-05-20", "eds_id": null, "handover": false, "kind": "moved", "label": "State Government", "milestone": null, "note": "State Government", "outcome": null, "part": null, "s": 6}, {"back": false, "court": "AUTHORITY", "date": "2026-06-11", "eds_id": null, "handover": false, "kind": "moved", "label": "IRO / MoEFCC", "milestone": null, "note": "IRO/MoEFCC (TO/AIGF/IRO Head)", "outcome": null, "part": null, "s": 7}, {"back": false, "court": "AUTHORITY", "date": "2026-06-18", "eds_id": null, "handover": false, "kind": "moved", "label": "Stage-II Approved", "milestone": null, "note": "Stage-II approval", "outcome": null, "part": null, "s": 8}], "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "s2_dfo", "label": "DFO"}, {"color": "#2173d6", "key": "s2_nodal", "label": "Nodal Officer"}, {"color": "#7a5195", "key": "s2_fra", "label": "FRA Approval (DC)"}, {"color": "#a1662f", "key": "s2_mutation", "label": "Mutation of NFL (Revenue)"}, {"color": "#c49a2e", "key": "s2_permit", "label": "Working permission (State)"}, {"color": "#9e7721", "key": "s2_state", "label": "State Government"}, {"color": "#068694", "key": "s2_iro", "label": "IRO / MoEFCC"}, {"color": "#52a32f", "key": "s2_final", "label": "Stage-II Approved"}]}, "stages": [{"color": "#d85b81", "key": "submitted", "label": "User Agency (UA)"}, {"color": "#054489", "key": "dfo_scrutiny", "label": "DFO Scrutiny"}, {"color": "#0b5ab3", "key": "cf_inspection", "label": "CF/CCF Site Inspection"}, {"color": "#683975", "key": "psc1", "label": "PSC-I (Nodal Officer)"}, {"color": "#2173d6", "key": "dfo_part2", "label": "DFO for Part-II"}, {"color": "#3f8ef4", "key": "cf_reco", "label": "CF/CCF Recommendations"}, {"color": "#81518f", "key": "psc2", "label": "PSC-II (Nodal Officer)"}, {"color": "#9e7721", "key": "state_govt", "label": "State Secretary"}, {"color": "#068694", "key": "iro", "label": "IRO"}, {"color": "#23a1b1", "key": "moefcc", "label": "MoEFCC Hq"}, {"color": "#52a32f", "key": "diversion", "label": "Approved"}]};
   
   window.PA_REMARKS = {
-    addUrl: "/paryavaran-ai/proposal/626/remarks",
+    addUrl: "/paryavaran-ai/proposal/632/remarks",
     delUrl: "/paryavaran-ai/remark/0/delete",
     canWrite: true,
     isAdmin: true,
