@@ -23,18 +23,7 @@
   var host = document.getElementById("jchart");
   if (!J || !host) return;
 
-  var stages = J.stages || [];
-  var n = stages.length;
-  var line = (J.line || []).filter(function (p) { return p.date; });
-  var eds = J.eds || [];
-  /* The parts this clearance is applied for in. Empty on Forest and Wildlife,
-     which run one application end to end. An Environment Clearance is two
-     applications under two proposal numbers, and drawing them as one unbroken
-     chain leaves a granted ToR looking like a file stalled a third of the way
-     up a ladder whose upper rungs belong to an application not yet made. */
-  var phases = J.phases || [];
-
-  if (!line.length) {
+  if (!(J.line || []).filter(function (p) { return p.date; }).length) {
     host.innerHTML = '<div class="empty">Nothing recorded yet.</div>';
     return;
   }
@@ -56,6 +45,52 @@
     });
   };
   var plural = function (k, w) { return k + " " + w + (k === 1 ? "" : "s"); };
+
+  /* Stage-II runs a ladder of its own after the Stage-I approval, and none of
+     it has happened yet: it is the PRESCRIBED timetable projected from the day
+     Stage-I was granted. Turning that into legs the chart can draw is the only
+     place this file invents a line rather than being handed one — so the flag
+     travels with every point, and the drawing dashes and fades whatever carries
+     it. A forecast that looks like a record is worse than no forecast. */
+  function projectedLine(plan, s2stages) {
+    var idx = {};
+    s2stages.forEach(function (st, i) { idx[st.key] = i; });
+    var out = [{ date: plan[0].from, s: 0, kind: "origin", back: false,
+                 handover: false, milestone: null, part: null,
+                 label: s2stages[0].label, note: "Stage-I approved",
+                 court: "NHAI", outcome: null, eds_id: null,
+                 no_duration: true, projected: true }];
+    plan.forEach(function (st, i) {
+      out.push({ date: st.from, s: idx[st.rung], kind: "moved",
+                 back: i > 0 && idx[st.rung] < idx[plan[i - 1].rung],
+                 handover: false, milestone: null, part: null,
+                 label: st.label, note: st.label, court: st.court,
+                 outcome: null, eds_id: null, projected: true });
+    });
+    return out;
+  }
+
+  /* Which chart is on screen. Re-entrant: every piece of state below is
+     computed inside, so switching view is a redraw rather than a patch. */
+  var VIEWS = { s1: 0, dfl: 1, nfl: 2 };
+  var view = "s1";
+  var lastShown = 0;
+
+  function draw() {
+    var S2 = J.stage2;
+    var proj = view !== "s1";
+    var stages = proj ? S2.stages : (J.stages || []);
+    var n = stages.length;
+    var line = proj
+      ? projectedLine(view === "nfl" ? S2.nfl : S2.dfl, stages)
+      : (J.line || []).filter(function (p) { return p.date; });
+    var eds = proj ? [] : (J.eds || []);
+    /* The parts this clearance is applied for in. Empty on Forest and Wildlife,
+       which run one application end to end. An Environment Clearance is two
+       applications under two proposal numbers, and drawing them as one unbroken
+       chain leaves a granted ToR looking like a file stalled a third of the way
+       up a ladder whose upper rungs belong to an application not yet made. */
+    var phases = proj ? [] : (J.phases || []);
 
   /* Merge consecutive events on the same rung into one occupancy leg. What a
      reader means by "the file was at the IRO" is the stretch it sat there, not
@@ -81,7 +116,10 @@
   var lastEvent = line[line.length - 1];
   var TOP = n - 1;
   var approved = legs[legs.length - 1].s === TOP;
-  var ended = lastEvent.kind === "ended" || approved;
+  /* A projection is "ended" only in the sense that it stops at the last
+     prescribed date rather than running to today — nothing about it has
+     happened, so the final tab says DUE, not Approved. */
+  var ended = proj || lastEvent.kind === "ended" || approved;
   var today = new Date().toISOString().slice(0, 10);
   var tail = ended ? legs[legs.length - 1].to : today;
   legs.forEach(function (g, i) {
@@ -257,16 +295,28 @@
              : g.up ? UP : g.handover ? HAND : DOWN;
     g.x0 = x0; g.cy = yy;
 
-    svg.push('<g class="jleg" data-i="' + i + '">');
+    /* Nothing on a projected chart has happened. Hollow tabs — the colour as an
+       outline over the paper rather than a solid fill — say that at a glance,
+       and say it in a way no legend is needed to decode: a filled bar is time
+       somebody spent, an outlined one is time somebody is allowed. */
+    svg.push('<g class="jleg' + (proj ? " proj" : "") + '" data-i="' + i + '">');
     if (g.noDuration) {
       svg.push('<rect class="pill" x="' + x0 + '" y="' + (yy - EYE) + '" width="' + w +
-               '" height="' + BH + '" rx="' + RAD + '" fill="' + fill + '"/>');
+               '" height="' + BH + '" rx="' + RAD + '" fill="' +
+               (proj ? "#faf9f5" : fill) + '"' +
+               (proj ? ' stroke="' + fill + '" stroke-width="1.4"' +
+                       ' stroke-dasharray="3 2.4"' : "") + "/>");
       svg.push('<text x="' + (x0 + w / 2) + '" y="' + (yy + 3.5) +
                '" text-anchor="middle" font-size="9" letter-spacing=".3" ' +
-               'fill="#fff" pointer-events="none">filed</text>');
+               'fill="' + (proj ? "#6b756c" : "#fff") +
+               '" pointer-events="none">' + (proj ? "granted" : "filed") +
+               "</text>");
     } else {
       svg.push('<rect class="pill" x="' + x0 + '" y="' + (yy - EYE) + '" width="' + w +
-               '" height="' + BH + '" rx="' + RAD + '" fill="' + fill + '"/>');
+               '" height="' + BH + '" rx="' + RAD + '" fill="' +
+               (proj ? "#faf9f5" : fill) + '"' +
+               (proj ? ' stroke="' + fill + '" stroke-width="1.4"' +
+                       ' stroke-dasharray="3 2.4"' : "") + "/>");
       if (g.open) {
         svg.push('<rect x="' + (x0 - 2.5) + '" y="' + (yy - EYE - 2.5) + '" width="' +
                  (w + 5) + '" height="' + (BH + 5) + '" rx="' + (RAD + 2) +
@@ -275,9 +325,10 @@
       }
       svg.push('<text x="' + (x0 + w / 2) + '" y="' + (yy + 3.8) +
                '" text-anchor="middle" font-size="' + (g.isApproval ? "10" : "10.5") +
-               '" font-weight="650" letter-spacing=".1" fill="#fff" ' +
-               'pointer-events="none">' +
-               (g.isApproval ? "Approved" : g.days + "d") + "</text>");
+               '" font-weight="650" letter-spacing=".1" fill="' +
+               (proj ? fill : "#fff") + '" pointer-events="none">' +
+               (g.isApproval ? (proj ? "Stage-II due" : "Approved")
+                             : g.days + "d") + "</text>");
     }
     svg.push("</g>");
   });
@@ -390,9 +441,57 @@
   });
 
   svg.push("</svg>");
-  host.innerHTML =
-    '<div class="jgrid">' + ax.join("") +
+
+  /* The Stage-II switch, and the banner that must travel with it.
+     "Approved" on a Forest file means STAGE-I — approval in principle. The
+     diversion is not usable until Stage-II issues, and the chain between them
+     was simply not on this page. */
+  var head = "";
+  if (J.stage2) {
+    head = '<div class="s2bar">' +
+      '<div class="s2tabs">' +
+      '<button type="button" class="s2t' + (view === "s1" ? " on" : "") +
+      '" data-view="s1">Stage-I &middot; recorded</button>' +
+      '<button type="button" class="s2t' + (view === "dfl" ? " on" : "") +
+      '" data-view="dfl">Stage-II &middot; degraded forest land</button>' +
+      '<button type="button" class="s2t' + (view === "nfl" ? " on" : "") +
+      '" data-view="nfl">Stage-II &middot; non-forest land</button></div>';
+    if (proj) {
+      var last = (view === "nfl" ? J.stage2.nfl : J.stage2.dfl);
+      head += '<div class="s2note"><b>Prescribed timetable, not a record.</b> ' +
+        "Nothing below has happened: these are the norms the process allows, " +
+        "run on from the Stage-I approval of " + dmy(J.stage2.granted_on) +
+        ". On these norms Stage-II falls due <b>" +
+        dmy(last[last.length - 1].to) + "</b> &mdash; " +
+        plural(days(J.stage2.granted_on, last[last.length - 1].to), "day") +
+        " after Stage-I." +
+        (view === "nfl"
+          ? " Non-forest compensatory land must be mutated to protected forest " +
+            "first, which adds three months."
+          : " Degraded forest land needs no mutation.") + "</div>";
+    }
+    head += "</div>";
+  }
+
+  host.innerHTML = head +
+    '<div class="jgrid' + (proj ? " proj" : "") + '">' + ax.join("") +
     '<div class="jplot">' + svg.join("") + "</div></div>";
+
+  /* Left to right, every time. The switch is a change of subject, not a
+     filter, and sliding says so in a way a swap cannot. */
+  var grid = host.querySelector(".jgrid");
+  if (grid && VIEWS[view] !== lastShown) {
+    grid.classList.add(VIEWS[view] > lastShown ? "slide-in" : "slide-back");
+  }
+  lastShown = VIEWS[view];
+
+  Array.prototype.forEach.call(host.querySelectorAll(".s2t"), function (b) {
+    b.addEventListener("click", function () {
+      if (b.dataset.view === view) return;
+      view = b.dataset.view;
+      draw();
+    });
+  });
 
   // ── tooltips ──────────────────────────────────────────────────────────────
   var tip = document.querySelector(".jtip");
@@ -554,7 +653,14 @@
     });
   });
 
-  window.addEventListener("scroll", hide, { passive: true });
   var plot = host.querySelector(".jplot");
   if (plot) plot.addEventListener("scroll", hide, { passive: true });
+  }
+
+  window.addEventListener("scroll", function () {
+    var t = document.querySelector(".jtip");
+    if (t) t.classList.remove("on");
+  }, { passive: true });
+
+  draw();
 })();
