@@ -378,6 +378,13 @@ a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,te
   -webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .plist .no{font-size:10.5px;color:var(--ink-3);margin-top:5px;display:block;
   font-variant-numeric:tabular-nums;letter-spacing:.02em}
+/* A two-part clearance carries both numbers on this line, each behind the
+   part it belongs to. Without the tags they read as one long string with a
+   break in it rather than as two separate applications. */
+.plist .pno{display:inline-block;margin:0 5px 0 0;padding:1px 5px;border-radius:4px;
+  background:var(--line);color:var(--ink-2);font-size:9px;font-weight:700;
+  letter-spacing:.5px;vertical-align:1px}
+.plist .pno ~ .pno{margin-left:12px}
 .plist .stg{display:flex;align-items:center;gap:7px;font-weight:600;line-height:1.3}
 .plist .stg .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
 .plist .step{display:block;font-size:10.5px;color:var(--ink-4);margin-top:5px}
