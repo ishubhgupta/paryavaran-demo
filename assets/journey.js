@@ -52,20 +52,51 @@
      place this file invents a line rather than being handed one — so the flag
      travels with every point, and the drawing dashes and fades whatever carries
      it. A forecast that looks like a record is worse than no forecast. */
-  function projectedLine(plan, s2stages) {
+  function projectedLine(plan, s2stages, recorded, done) {
     var idx = {};
     s2stages.forEach(function (st, i) { idx[st.key] = i; });
-    var out = [{ date: plan[0].from, s: 0, kind: "origin", back: false,
+
+    /* What has actually been recorded comes first and is drawn like any other
+       journey. Only the steps still OUTSTANDING are projected, and they are
+       re-based on the last real date rather than on the Stage-I approval — a
+       chain that started late is due late, and running the norms from the
+       original grant would quietly report time that has already been spent as
+       still available. */
+    var out = recorded.slice();
+    var rest = plan.slice(done);
+    if (!rest.length) return out;
+
+    /* The remaining chain starts when the file is due to LEAVE the desk it is
+       on, not the day it arrived there. Re-basing on the arrival date alone
+       projected the next desk to receive the file the same morning, silently
+       dropping the allowance of the step just recorded. */
+    var from = plan[0].from;
+    if (out.length) {
+      var d0 = new Date(out[out.length - 1].date);
+      d0.setDate(d0.getDate() + (plan[done - 1] ? plan[done - 1].days : 0));
+      from = d0.toISOString().slice(0, 10);
+    }
+    if (!out.length) {
+      out.push({ date: from, s: 0, kind: "origin", back: false,
                  handover: false, milestone: null, part: null,
                  label: s2stages[0].label, note: "Stage-I approved",
                  court: "NHAI", outcome: null, eds_id: null,
-                 no_duration: true, projected: true }];
-    plan.forEach(function (st, i) {
-      out.push({ date: st.from, s: idx[st.rung], kind: "moved",
-                 back: i > 0 && idx[st.rung] < idx[plan[i - 1].rung],
-                 handover: false, milestone: null, part: null,
-                 label: st.label, note: st.label, court: st.court,
+                 no_duration: true, projected: true });
+    }
+    /* Each point is stamped with the day the file ARRIVES at that desk, and the
+       clock is advanced afterwards. Stamping the end date instead makes every
+       bar show the duration of the step after it — a shift of one that is
+       invisible unless you total the chart against the norms. */
+    var prev = out[out.length - 1].s;
+    rest.forEach(function (st) {
+      out.push({ date: from, s: idx[st.rung], kind: "moved",
+                 back: idx[st.rung] < prev, handover: false, milestone: null,
+                 part: null, label: st.label, note: st.label, court: st.court,
                  outcome: null, eds_id: null, projected: true });
+      prev = idx[st.rung];
+      var d = new Date(from);
+      d.setDate(d.getDate() + st.days);
+      from = d.toISOString().slice(0, 10);
     });
     return out;
   }
@@ -96,7 +127,8 @@
     var stages = proj ? S2.stages : (J.stages || []);
     var n = stages.length;
     var line = proj
-      ? projectedLine(path === "NFL" ? S2.nfl : S2.dfl, stages)
+      ? projectedLine(path === "NFL" ? S2.nfl : S2.dfl, stages,
+                      S2.recorded || [], S2.done || 0)
       : (J.line || []).filter(function (p) { return p.date; });
     var eds = proj ? [] : (J.eds || []);
     /* The parts this clearance is applied for in. Empty on Forest and Wildlife,
@@ -142,6 +174,11 @@
     g.open = !ended && i === legs.length - 1;
     // the final landing on the top rung is the outcome, not a duration
     g.isApproval = approved && i === legs.length - 1 && g.s === TOP;
+    /* Per LEG, not per chart. Once Stage-II is being recorded the same chart
+       carries both — what happened, drawn solid, and what is still due, drawn
+       hollow — and one flag for the whole view would have to lie about one of
+       them. */
+    g.proj = !!(g.events[0] && g.events[0].projected);
   });
 
   /* Colour is the DIRECTION the file arrived from — green if it climbed to get
@@ -313,23 +350,23 @@
        outline over the paper rather than a solid fill — say that at a glance,
        and say it in a way no legend is needed to decode: a filled bar is time
        somebody spent, an outlined one is time somebody is allowed. */
-    svg.push('<g class="jleg' + (proj ? " proj" : "") + '" data-i="' + i + '">');
+    svg.push('<g class="jleg' + (g.proj ? " proj" : "") + '" data-i="' + i + '">');
     if (g.noDuration) {
       svg.push('<rect class="pill" x="' + x0 + '" y="' + (yy - EYE) + '" width="' + w +
                '" height="' + BH + '" rx="' + RAD + '" fill="' +
-               (proj ? "#faf9f5" : fill) + '"' +
-               (proj ? ' stroke="' + fill + '" stroke-width="1.4"' +
+               (g.proj ? "#faf9f5" : fill) + '"' +
+               (g.proj ? ' stroke="' + fill + '" stroke-width="1.4"' +
                        ' stroke-dasharray="3 2.4"' : "") + "/>");
       svg.push('<text x="' + (x0 + w / 2) + '" y="' + (yy + 3.5) +
                '" text-anchor="middle" font-size="9" letter-spacing=".3" ' +
-               'fill="' + (proj ? "#6b756c" : "#fff") +
+               'fill="' + (g.proj ? "#6b756c" : "#fff") +
                '" pointer-events="none">' + (proj ? "granted" : "filed") +
                "</text>");
     } else {
       svg.push('<rect class="pill" x="' + x0 + '" y="' + (yy - EYE) + '" width="' + w +
                '" height="' + BH + '" rx="' + RAD + '" fill="' +
-               (proj ? "#faf9f5" : fill) + '"' +
-               (proj ? ' stroke="' + fill + '" stroke-width="1.4"' +
+               (g.proj ? "#faf9f5" : fill) + '"' +
+               (g.proj ? ' stroke="' + fill + '" stroke-width="1.4"' +
                        ' stroke-dasharray="3 2.4"' : "") + "/>");
       if (g.open) {
         svg.push('<rect x="' + (x0 - 2.5) + '" y="' + (yy - EYE - 2.5) + '" width="' +
@@ -340,8 +377,8 @@
       svg.push('<text x="' + (x0 + w / 2) + '" y="' + (yy + 3.8) +
                '" text-anchor="middle" font-size="' + (g.isApproval ? "10" : "10.5") +
                '" font-weight="650" letter-spacing=".1" fill="' +
-               (proj ? fill : "#fff") + '" pointer-events="none">' +
-               (g.isApproval ? (proj ? "Stage-II due" : "Approved")
+               (g.proj ? fill : "#fff") + '" pointer-events="none">' +
+               (g.isApproval ? (g.proj ? "Stage-II due" : "Approved")
                              : g.days + "d") + "</text>");
     }
     svg.push("</g>");
@@ -468,13 +505,22 @@
       '<button type="button" class="s2t' + (view === "s2" ? " on" : "") +
       '" data-view="s2">Stage-II</button></div>';
     if (proj) {
-      var last = (path === "NFL" ? J.stage2.nfl : J.stage2.dfl);
-      head += '<div class="s2note"><b>Prescribed timetable, not a record.</b> ' +
-        "Nothing below has happened: these are the norms the process allows, " +
-        "run on from the Stage-I approval of " + dmy(J.stage2.granted_on) +
-        ". On them Stage-II falls due <b>" + dmy(last[last.length - 1].to) +
-        "</b> &mdash; " +
-        plural(days(J.stage2.granted_on, last[last.length - 1].to), "day") +
+      var done = S2.done || 0;
+      /* Due date off the DRAWN line, not off the untouched plan: once part of
+         the chain is recorded the rest is re-based on the last real date, and
+         quoting the original projection here would contradict the chart beside
+         it. */
+      var lastLeg = line[line.length - 1];
+      head += '<div class="s2note">' +
+        (done
+          ? "<b>" + plural(done, "step") + " recorded</b>, the rest projected. " +
+            "The dashed bars are the norms the process allows, run on from the " +
+            "last step actually recorded"
+          : "<b>Prescribed timetable, not a record.</b> Nothing below has " +
+            "happened: these are the norms the process allows, run on from the " +
+            "Stage-I approval of " + dmy(J.stage2.granted_on)) +
+        ". On them Stage-II falls due <b>" + dmy(lastLeg.date) + "</b> &mdash; " +
+        plural(days(J.stage2.granted_on, lastLeg.date), "day") +
         " after Stage-I. " +
         (known === "NFL"
           ? "Compensatory land is <b>non-forest</b>, so it must be mutated to " +
