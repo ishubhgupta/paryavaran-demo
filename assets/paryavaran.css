@@ -278,6 +278,10 @@ textarea.pa-input{resize:vertical}
   border-left:2.5px solid #c76073;color:#f0dbdf;line-height:1.45}
 .jtip .why b{color:#fff}
 
+/* A note under a field: what the answer will change, said where it is asked. */
+.fl .fh{display:block;margin-top:5px;font-size:11px;line-height:1.5;
+  color:var(--ink-3);font-weight:400}
+
 /* ── Stage-II ────────────────────────────────────────────────────────────── */
 /* "Approved" on a Forest file is STAGE-I. The diversion is not usable until
    Stage-II issues, and what sits between them is a prescribed timetable rather

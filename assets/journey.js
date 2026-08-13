@@ -72,9 +72,23 @@
 
   /* Which chart is on screen. Re-entrant: every piece of state below is
      computed inside, so switching view is a redraw rather than a patch. */
-  var VIEWS = { s1: 0, dfl: 1, nfl: 2 };
-  var view = "s1";
-  var lastShown = 0;
+  /* Two stages, not three views. Which compensatory land the project uses is
+     answered on the form when the proposal is raised, so Stage-II follows the
+     recorded path instead of asking the reader to pick one. */
+  var VIEWS = { s1: 0, s2: 1 };
+  var known = J.stage2 && J.stage2.ca_land
+    ? String(J.stage2.ca_land).toUpperCase() : null;
+  /* Where nothing was recorded the chart still has to draw something, so it
+     draws the shorter path and says on the banner that it is an assumption.
+     Silently defaulting would under-state the timetable by three months while
+     looking exactly like somebody's answer. */
+  var path = known || "DFL";
+
+  /* Open on the stage the file is actually IN. Stage-I is done the moment it is
+     approved, and landing a reader on a finished chart when the live work has
+     moved to Stage-II shows them the part that no longer needs watching. */
+  var view = J.stage2 ? "s2" : "s1";
+  var lastShown = VIEWS[view];
 
   function draw() {
     var S2 = J.stage2;
@@ -82,7 +96,7 @@
     var stages = proj ? S2.stages : (J.stages || []);
     var n = stages.length;
     var line = proj
-      ? projectedLine(view === "nfl" ? S2.nfl : S2.dfl, stages)
+      ? projectedLine(path === "NFL" ? S2.nfl : S2.dfl, stages)
       : (J.line || []).filter(function (p) { return p.date; });
     var eds = proj ? [] : (J.eds || []);
     /* The parts this clearance is applied for in. Empty on Forest and Wildlife,
@@ -448,27 +462,30 @@
      was simply not on this page. */
   var head = "";
   if (J.stage2) {
-    head = '<div class="s2bar">' +
-      '<div class="s2tabs">' +
+    head = '<div class="s2bar"><div class="s2tabs">' +
       '<button type="button" class="s2t' + (view === "s1" ? " on" : "") +
-      '" data-view="s1">Stage-I &middot; recorded</button>' +
-      '<button type="button" class="s2t' + (view === "dfl" ? " on" : "") +
-      '" data-view="dfl">Stage-II &middot; degraded forest land</button>' +
-      '<button type="button" class="s2t' + (view === "nfl" ? " on" : "") +
-      '" data-view="nfl">Stage-II &middot; non-forest land</button></div>';
+      '" data-view="s1">Stage-I</button>' +
+      '<button type="button" class="s2t' + (view === "s2" ? " on" : "") +
+      '" data-view="s2">Stage-II</button></div>';
     if (proj) {
-      var last = (view === "nfl" ? J.stage2.nfl : J.stage2.dfl);
+      var last = (path === "NFL" ? J.stage2.nfl : J.stage2.dfl);
       head += '<div class="s2note"><b>Prescribed timetable, not a record.</b> ' +
         "Nothing below has happened: these are the norms the process allows, " +
         "run on from the Stage-I approval of " + dmy(J.stage2.granted_on) +
-        ". On these norms Stage-II falls due <b>" +
-        dmy(last[last.length - 1].to) + "</b> &mdash; " +
+        ". On them Stage-II falls due <b>" + dmy(last[last.length - 1].to) +
+        "</b> &mdash; " +
         plural(days(J.stage2.granted_on, last[last.length - 1].to), "day") +
-        " after Stage-I." +
-        (view === "nfl"
-          ? " Non-forest compensatory land must be mutated to protected forest " +
-            "first, which adds three months."
-          : " Degraded forest land needs no mutation.") + "</div>";
+        " after Stage-I. " +
+        (known === "NFL"
+          ? "Compensatory land is <b>non-forest</b>, so it must be mutated to " +
+            "protected forest first &mdash; three months this chain would not " +
+            "otherwise carry."
+          : known === "DFL"
+            ? "Compensatory land is <b>degraded forest</b>, which needs no " +
+              "mutation."
+            : "The compensatory land was not recorded when this proposal was " +
+              "raised, so this <b>assumes degraded forest land</b>. If it is " +
+              "non-forest, add three months for mutation.") + "</div>";
     }
     head += "</div>";
   }
