@@ -327,6 +327,16 @@ textarea.pa-input{resize:vertical}
   .jgrid.slide-in,.jgrid.slide-back{animation:none}
 }
 
+/* Every number a project was filed under, on its own line above the dates.
+   The record being read is bold; the rest link. */
+.chainno{display:flex;flex-wrap:wrap;align-items:center;gap:4px;margin-bottom:5px}
+.chainno a{color:var(--brand-ink)}
+.chainno a:hover{text-decoration:underline}
+.chainno .pno{display:inline-block;margin:0 1px 0 6px;padding:1px 5px;border-radius:4px;
+  background:var(--line);color:var(--ink-2);font-size:9px;font-weight:700;
+  letter-spacing:.5px;vertical-align:1px}
+.chainno > :first-child{margin-left:0}
+
 /* One project, two proposal numbers: which records the chart is drawing. */
 .jparts{font-size:11.5px;color:var(--ink-2);margin:0 0 7px}
 .jparts a{color:var(--brand-ink);font-weight:600}
